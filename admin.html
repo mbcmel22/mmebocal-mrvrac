@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Back-office — Mme Bocal & Mr Vrac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ====== ÉCRAN DE CONNEXION ====== -->
+<div class="bo-login" id="loginView">
+  <div class="bo-login__box">
+    <div class="logo logo--vert">mme b<span class="esp">&amp;</span>cal · mr vrac</div>
+    <p>Espace gérant — connexion sécurisée</p>
+    <div class="err" id="loginErr" style="display:none"></div>
+    <div class="field"><label>E-mail</label><input type="email" id="email" placeholder="cecile@..."></div>
+    <div class="field"><label>Mot de passe</label><input type="password" id="pwd" placeholder="••••••••"></div>
+    <button class="btn btn--p" id="loginBtn" style="width:100%;justify-content:center">Se connecter</button>
+  </div>
+</div>
+
+<!-- ====== APPLICATION ====== -->
+<div id="appView" style="display:none">
+  <div class="bo-top">
+    <div class="bo-top__in">
+      <div class="logo logo--blanc">mme b<span class="esp">&amp;</span>cal · mr vrac — back-office</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="btn btn--o mini" id="settingsBtn" style="font-size:14px;padding:9px 16px">⚙ Infos magasin</button>
+        <button class="btn btn--ghost" id="logout" style="border-color:#fff;color:#fff;font-size:14px;padding:9px 16px">Déconnexion</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bo-wrap">
+    <div class="bo-stats" id="stats"></div>
+
+    <div class="bo-bar">
+      <input type="search" id="search" placeholder="🔍 Rechercher un produit…">
+      <select id="catFilter" class="field" style="max-width:220px"></select>
+      <button class="btn btn--p" id="addBtn">+ Nouveau produit</button>
+    </div>
+
+    <table class="bo-table">
+      <thead><tr>
+        <th>Produit</th><th>Catégorie</th><th>Prix</th><th>Stock</th><th>Dispo</th><th>Visible</th><th></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ====== MODALE PRODUIT ====== -->
+<div class="modal" id="modal">
+  <div class="modal__box">
+    <h3 id="modalTitle">Nouveau produit</h3>
+    <div class="err" id="modalErr" style="display:none"></div>
+    <input type="hidden" id="pId">
+    <div class="field"><label>Nom *</label><input id="pName"></div>
+    <div class="field"><label>Catégorie *</label><input id="pCat" list="catList" placeholder="ex. Épices & condiments">
+      <datalist id="catList"></datalist></div>
+    <div style="display:flex;gap:12px">
+      <div class="field" style="flex:1"><label>Prix (€)</label><input id="pPrice" type="number" step="0.01" placeholder="5.90"></div>
+      <div class="field" style="flex:1"><label>Unité</label><input id="pUnit" placeholder="/kg, /pièce, 75cl"></div>
+      <div class="field" style="flex:1"><label>Stock</label><input id="pQty" type="number" value="0"></div>
+    </div>
+    <div class="field"><label>Photo (URL)</label><input id="pImg" placeholder="https://…  (Supabase Storage)"></div>
+    <div class="field"><label>Description</label><textarea id="pDesc" rows="2"></textarea></div>
+    <div class="field" style="display:flex;gap:18px;align-items:center">
+      <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="pLocal" style="width:auto"> Produit local</label>
+      <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="pVisible" style="width:auto" checked> Visible sur le site</label>
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn--ghost" id="modalCancel">Annuler</button>
+      <button class="btn btn--p" id="modalSave">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== MODALE RÉGLAGES ====== -->
+<div class="modal" id="settingsModal">
+  <div class="modal__box">
+    <h3>Infos du magasin</h3>
+    <p style="color:#888;font-size:13px;margin-bottom:16px">Ces infos s'affichent automatiquement sur le site public.</p>
+    <div class="err" id="setErr" style="display:none"></div>
+    <div class="field"><label>Adresse</label><input id="sAdresse"></div>
+    <div class="field"><label>Téléphone</label><input id="sTel"></div>
+    <div class="field"><label>E-mail</label><input id="sEmail"></div>
+    <div class="field"><label>Horaires</label><input id="sHoraires"></div>
+    <div class="modal__actions">
+      <button class="btn btn--ghost" id="setCancel">Annuler</button>
+      <button class="btn btn--p" id="setSave">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Enregistré</div>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
+const $=id=>document.getElementById(id);
+let products=[];
+
+function toast(m){const t=$('toast');t.textContent=m||'✓ Enregistré';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1500);}
+
+/* ---------- AUTH ---------- */
+async function checkSession(){
+  const {data}=await sb.auth.getSession();
+  if(data.session){showApp();} else {$('loginView').style.display='flex';$('appView').style.display='none';}
+}
+$('loginBtn').onclick=async()=>{
+  $('loginErr').style.display='none';
+  const {error}=await sb.auth.signInWithPassword({email:$('email').value.trim(),password:$('pwd').value});
+  if(error){$('loginErr').textContent='Connexion impossible : '+error.message;$('loginErr').style.display='block';return;}
+  showApp();
+};
+$('logout').onclick=async()=>{await sb.auth.signOut();location.reload();};
+function showApp(){$('loginView').style.display='none';$('appView').style.display='block';loadAll();}
+
+/* ---------- CHARGEMENT ---------- */
+async function loadAll(){
+  const {data,error}=await sb.from('products').select('*').order('category').order('name');
+  if(error){alert('Erreur : '+error.message);return;}
+  products=data||[];
+  renderCats();renderStats();render();
+}
+function renderCats(){
+  const cats=[...new Set(products.map(p=>p.category))].sort();
+  $('catFilter').innerHTML='<option value="">Toutes les catégories</option>'+cats.map(c=>`<option>${c}</option>`).join('');
+  $('catList').innerHTML=cats.map(c=>`<option value="${c}">`).join('');
+}
+function renderStats(){
+  const total=products.length;
+  const epuise=products.filter(p=>p.qty<=0).length;
+  const limite=products.filter(p=>p.qty>0&&p.qty<=5).length;
+  const masques=products.filter(p=>!p.visible).length;
+  $('stats').innerHTML=`
+    <div class="stat"><b>${total}</b><span>Produits</span></div>
+    <div class="stat"><b style="color:#caa44a">${limite}</b><span>Stock limité</span></div>
+    <div class="stat"><b style="color:#c0392b">${epuise}</b><span>Épuisés</span></div>
+    <div class="stat"><b style="color:#9a9a9a">${masques}</b><span>Masqués</span></div>`;
+}
+function dispoTxt(q){return q<=0?'<span style="color:#c0392b;font-weight:600">Épuisé</span>':q<=5?'<span style="color:#caa44a;font-weight:600">Limité</span>':'<span style="color:#35582B;font-weight:600">En stock</span>';}
+
+function render(){
+  const q=$('search').value.toLowerCase();
+  const cf=$('catFilter').value;
+  const list=products.filter(p=>(!q||p.name.toLowerCase().includes(q))&&(!cf||p.category===cf));
+  $('rows').innerHTML=list.map(p=>`
+    <tr>
+      <td><b>${p.name}</b>${p.local?' <span class="tag tag--local" style="font-size:10px">Local</span>':''}</td>
+      <td>${p.category}</td>
+      <td>${p.price!=null?Number(p.price).toFixed(2)+' € '+(p.unit||''):'—'}</td>
+      <td><div class="qty">
+        <button onclick="chg('${p.id}',-1)">−</button>
+        <input type="number" value="${p.qty}" onchange="setQty('${p.id}',this.value)">
+        <button onclick="chg('${p.id}',1)">+</button>
+      </div></td>
+      <td>${dispoTxt(p.qty)}</td>
+      <td><button class="mini mini--vis" onclick="toggleVis('${p.id}')">${p.visible?'👁 Oui':'🚫 Non'}</button></td>
+      <td style="white-space:nowrap">
+        <button class="mini mini--edit" onclick="edit('${p.id}')">Modifier</button>
+        <button class="mini mini--del" onclick="del('${p.id}','${p.name.replace(/'/g,"\\'")}')">Suppr.</button>
+      </td>
+    </tr>`).join('');
+}
+$('search').oninput=render;$('catFilter').onchange=render;
+
+/* ---------- ÉCRITURE STOCK ---------- */
+async function persistQty(id,qty){
+  const {error}=await sb.from('products').update({qty}).eq('id',id);
+  if(error){alert('Erreur : '+error.message);return false;}
+  toast();return true;
+}
+async function chg(id,d){const p=products.find(x=>x.id===id);const nv=Math.max(0,p.qty+d);p.qty=nv;renderStats();render();await persistQty(id,nv);}
+async function setQty(id,v){const p=products.find(x=>x.id===id);const nv=Math.max(0,parseInt(v)||0);p.qty=nv;renderStats();render();await persistQty(id,nv);}
+async function toggleVis(id){const p=products.find(x=>x.id===id);const nv=!p.visible;p.visible=nv;renderStats();render();const {error}=await sb.from('products').update({visible:nv}).eq('id',id);error?alert(error.message):toast();}
+
+/* ---------- AJOUT / ÉDITION ---------- */
+const modal=$('modal');
+function openModal(p){
+  $('modalErr').style.display='none';
+  $('modalTitle').textContent=p?'Modifier le produit':'Nouveau produit';
+  $('pId').value=p?.id||'';$('pName').value=p?.name||'';$('pCat').value=p?.category||'';
+  $('pPrice').value=p?.price??'';$('pUnit').value=p?.unit||'/kg';$('pQty').value=p?.qty??0;
+  $('pImg').value=p?.image_url||'';$('pDesc').value=p?.description||'';
+  $('pLocal').checked=!!p?.local;$('pVisible').checked=p?p.visible:true;
+  modal.classList.add('open');
+}
+$('addBtn').onclick=()=>openModal(null);
+function edit(id){openModal(products.find(p=>p.id===id));}
+$('modalCancel').onclick=()=>modal.classList.remove('open');
+$('modalSave').onclick=async()=>{
+  const name=$('pName').value.trim(),cat=$('pCat').value.trim();
+  if(!name||!cat){$('modalErr').textContent='Le nom et la catégorie sont obligatoires.';$('modalErr').style.display='block';return;}
+  const row={
+    name,category:cat,
+    price:$('pPrice').value?parseFloat($('pPrice').value):null,
+    unit:$('pUnit').value.trim()||null,qty:parseInt($('pQty').value)||0,
+    image_url:$('pImg').value.trim()||null,description:$('pDesc').value.trim()||null,
+    local:$('pLocal').checked,visible:$('pVisible').checked
+  };
+  const id=$('pId').value;
+  const {error}= id ? await sb.from('products').update(row).eq('id',id)
+                    : await sb.from('products').insert(row);
+  if(error){$('modalErr').textContent='Erreur : '+error.message;$('modalErr').style.display='block';return;}
+  modal.classList.remove('open');toast();loadAll();
+};
+async function del(id,name){
+  if(!confirm('Supprimer définitivement « '+name+' » ?'))return;
+  const {error}=await sb.from('products').delete().eq('id',id);
+  error?alert(error.message):(toast('🗑 Supprimé'),loadAll());
+}
+
+/* ---------- RÉGLAGES MAGASIN ---------- */
+const sModal=$('settingsModal');
+$('settingsBtn').onclick=async()=>{
+  const {data}=await sb.from('settings').select('*');
+  const s={};(data||[]).forEach(r=>s[r.key]=r.value);
+  $('sAdresse').value=s.adresse||'';$('sTel').value=s.telephone||'';$('sEmail').value=s.email||'';$('sHoraires').value=s.horaires||'';
+  sModal.classList.add('open');
+};
+$('setCancel').onclick=()=>sModal.classList.remove('open');
+$('setSave').onclick=async()=>{
+  const rows=[
+    {key:'adresse',value:$('sAdresse').value},{key:'telephone',value:$('sTel').value},
+    {key:'email',value:$('sEmail').value},{key:'horaires',value:$('sHoraires').value}
+  ];
+  const {error}=await sb.from('settings').upsert(rows);
+  if(error){$('setErr').textContent=error.message;$('setErr').style.display='block';return;}
+  sModal.classList.remove('open');toast();
+};
+
+checkSession();
+</script>
+</body>
+</html>
