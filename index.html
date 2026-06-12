@@ -3,302 +3,426 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- ====================== SEO ====================== -->
-<title>Mme Bocal & Mr Vrac — Épicerie bio, vrac & zéro-déchet à Cholet</title>
-<meta name="description" content="1ère épicerie bio sans emballage jetable de Cholet. Produits en vrac, consigne, bio et locaux : épicerie, fruits & légumes, hygiène, entretien et accessoires zéro-déchet. 90 rue Nationale, 49300 Cholet.">
-<meta name="keywords" content="épicerie bio Cholet, vrac Cholet, zéro déchet Cholet, magasin bio Maine-et-Loire, consigne, produits locaux 49, alimentation biologique, sans emballage">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.mmebocaletmrvrac.com/">
-
-<!-- Open Graph / réseaux sociaux -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Mme Bocal & Mr Vrac — Épicerie bio, vrac & zéro-déchet à Cholet">
-<meta property="og:description" content="Du vrac, des bocaux consignés : notre vision de l'épicerie bio et locale à Cholet.">
-<meta property="og:locale" content="fr_FR">
-<meta property="og:url" content="https://www.mmebocaletmrvrac.com/">
-
-<!-- Données structurées : commerce local (aide Google à afficher horaires/adresse) -->
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"GroceryStore",
-  "name":"Mme Bocal & Mr Vrac",
-  "description":"Épicerie bio, vrac, consigne et zéro-déchet à Cholet.",
-  "address":{"@type":"PostalAddress","streetAddress":"90 rue Nationale","postalCode":"49300","addressLocality":"Cholet","addressCountry":"FR"},
-  "telephone":"+33981344050",
-  "email":"mmebocaletmrvrac@hotmail.com",
-  "url":"https://www.mmebocaletmrvrac.com/",
-  "openingHoursSpecification":[{
-    "@type":"OpeningHoursSpecification",
-    "dayOfWeek":["Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    "opens":"10:00","closes":"13:30"
-  },{
-    "@type":"OpeningHoursSpecification",
-    "dayOfWeek":["Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    "opens":"15:00","closes":"19:00"
-  }],
-  "priceRange":"€€",
-  "sameAs":["https://www.instagram.com/mmebocaletmrvrac/","https://www.facebook.com/mmebocaletmrvrac"]
-}
-</script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Mme Bocal & Mr Vrac · Épicerie vrac & bio à Cholet</title>
+<meta name="description" content="Épicerie vrac, bio et locale à Cholet. Vrac au poids, consigne, paniers bio et producteurs de la région. Réservez vos produits par WhatsApp.">
+<link rel="icon" href="logo.png">
 <link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"GroceryStore","name":"Mme Bocal & Mr Vrac",
+"address":{"@type":"PostalAddress","streetAddress":"90 rue Nationale","postalCode":"49300","addressLocality":"Cholet","addressCountry":"FR"},
+"servesCuisine":"Bio, vrac","priceRange":"€€"}
+</script>
 </head>
 <body>
 
-<!-- ============ NAV ============ -->
-<header class="nav">
-  <div class="nav__in">
-    <a href="#accueil" class="logo logo--vert nav__logo">mme b<span class="esp">&amp;</span>cal · mr vrac</a>
-    <nav class="nav__links" id="menu">
-      <a href="#produits">Nos produits</a>
-      <a href="#services">Services</a>
-      <a href="#histoire">L'épicerie</a>
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="wrap bar">
+    <a href="#top"><img src="logo.png" alt="Mme Bocal & Mr Vrac" class="logo"></a>
+    <nav class="links" id="nav">
+      <a href="#shop">Nos produits</a>
+      <a href="#services">Nos services</a>
+      <a href="#story">L'épicerie</a>
       <a href="#contact">Contact</a>
-      <a href="#contact" class="nav__cta">Venir nous voir</a>
+      <span class="open-badge mobile-badge" id="openBadgeMobile"><span class="dot"></span><span class="lbl">Horaires</span></span>
     </nav>
-    <button class="nav__burger" id="burger" aria-label="Menu">☰</button>
+    <span class="open-badge" id="openBadge"><span class="dot"></span><span class="lbl">Horaires</span></span>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="accueil">
-  <div class="hero__in">
-    <div>
-      <span class="hero__eyebrow">🌱 1ère épicerie zéro-déchet de Cholet</span>
-      <h1>Du vrac, des bocaux consignés,<br>notre vision de l'épicerie.</h1>
-      <p>Cécile & Philippe vous accueillent dans leur épicerie 100 % bio et sans emballage jetable, en plein centre-ville de Cholet. Découvrez nos produits et préparez votre liste de courses.</p>
-      <div class="hero__btns">
-        <a href="#produits" class="btn btn--p">Voir nos produits</a>
-        <a href="#services" class="btn btn--ghost">Nos services</a>
-      </div>
-    </div>
-    <div class="hero__card">
-      <div class="logo logo--vert">mme b<span class="esp">&amp;</span>cal<br>mr vrac</div>
-      <!-- Mascotte "Biyo" en SVG léger -->
-      <svg class="hero__mascotte" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="34" y="6" width="52" height="12" rx="4" stroke="#35582B" stroke-width="3"/>
-        <path d="M30 22h60v110a10 10 0 0 1-10 10H40a10 10 0 0 1-10-10V22Z" stroke="#35582B" stroke-width="3"/>
-        <path d="M30 95h60v37a10 10 0 0 1-10 10H40a10 10 0 0 1-10-10V95Z" fill="#F8F3E9"/>
-        <circle cx="48" cy="64" r="3.5" fill="#35582B"/>
-        <circle cx="72" cy="64" r="3.5" fill="#35582B"/>
-        <path d="M50 74q10 9 20 0" stroke="#35582B" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <circle cx="60" cy="112" r="1.8" fill="#35582B"/><circle cx="50" cy="120" r="1.8" fill="#35582B"/><circle cx="70" cy="120" r="1.8" fill="#35582B"/><circle cx="60" cy="128" r="1.8" fill="#35582B"/>
-        <path d="M86 30c8-4 14 2 12 8" stroke="#F9863F" stroke-width="3" stroke-linecap="round" fill="none"/>
-      </svg>
-      <p class="hero__tagline">Le Biyo local,<br><span>en bocal.</span></p>
-    </div>
+<span id="top"></span>
+
+<!-- ================= HERO ================= -->
+<section class="hero wrap">
+  <img class="mascotte" id="mascotte" alt="Biyo, la mascotte de l'épicerie"
+       src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 150'><rect x='34' y='28' width='52' height='14' rx='5' fill='none' stroke='%2335582B' stroke-width='4'/><rect x='30' y='40' width='60' height='98' rx='12' fill='none' stroke='%2335582B' stroke-width='4'/><rect x='34' y='96' width='52' height='38' rx='8' fill='%23efe7d6'/><circle cx='50' cy='74' r='3.4' fill='%2335582B'/><circle cx='70' cy='74' r='3.4' fill='%2335582B'/><path d='M50 86 q10 9 20 0' fill='none' stroke='%2335582B' stroke-width='4' stroke-linecap='round'/><path d='M86 40 q12 -4 8 -16' fill='none' stroke='%23F9863F' stroke-width='4' stroke-linecap='round'/></svg>">
+  <h1>Le bio local,<br>en vrac et en bocal.</h1>
+  <p class="tag">Mangez juste. Jetez moins.</p>
+  <p class="sub">Du riz aux épices, du café aux fruits secs, du miel de Cholet aux produits d'hygiène à recharger : composez vos courses au poids, sans emballage inutile.</p>
+  <div class="hero-cta">
+    <a href="#shop" class="btn btn-primary">Découvrir nos produits</a>
+    <a href="#contact" class="btn btn-ghost">Nous écrire</a>
   </div>
 </section>
 
-<!-- ============ BANDEAU RAPIDE ============ -->
-<div class="quick">
-  <div class="quick__in">
-    <span>📍 <b>90 rue Nationale, Cholet</b></span>
-    <span>🕑 <b id="q-horaires">Mar.→Sam. · 10h-13h30 / 15h-19h</b></span>
-    <span>📞 <b id="q-tel">09 81 34 40 50</b></span>
+<!-- ================= PRODUITS ================= -->
+<section class="section wrap" id="shop">
+  <div class="shop-head">
+    <div class="titles">
+      <p class="eyebrow">Notre catalogue</p>
+      <h2>Nos produits</h2>
+    </div>
+    <div class="toolbar">
+      <div class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <input id="search" type="search" placeholder="Rechercher un produit…">
+      </div>
+      <div class="filter">
+        <button class="filter-btn" id="filterBtn">Filtrer <span class="count" id="filterCount">·</span> ▾</button>
+        <div class="filter-menu" id="filterMenu"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="carousel">
+    <button class="arrow prev" id="arrowPrev" aria-label="Précédent">‹</button>
+    <div class="track" id="track"><div class="empty">Chargement des produits…</div></div>
+    <button class="arrow next" id="arrowNext" aria-label="Suivant">›</button>
+  </div>
+</section>
+
+<!-- ============ VICTIMES DE LEUR SUCCÈS ============ -->
+<section class="section soldout" id="soldout" style="display:none">
+  <div class="wrap">
+    <p class="eyebrow">Bientôt de retour</p>
+    <h2>Victimes de leur succès</h2>
+    <p class="lead">Ces produits sont partis plus vite que prévu. Laissez-nous votre numéro, nous vous prévenons dès le réassort.</p>
+    <div class="soldout-grid" id="soldoutGrid"></div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="section wrap" id="services">
+  <p class="eyebrow">Bien plus qu'une épicerie</p>
+  <h2>Nos services</h2>
+  <p class="lead">Un accompagnement vers une consommation plus simple et plus responsable.</p>
+  <div class="services-grid">
+    <div class="svc"><h3>Vrac & au poids</h3><p>Servez-vous la juste quantité, sans emballage inutile. Apportez vos contenants, on s'occupe du reste.</p></div>
+    <div class="svc"><h3>Consigne</h3><p>Bocaux et bouteilles consignés : vous ramenez, on réutilise. Le verre a une seconde vie.</p></div>
+    <div class="svc"><h3>Paniers bio</h3><p>Des paniers de produits bio et locaux, à composer selon la saison et vos envies.</p></div>
+    <div class="svc"><h3>Producteurs locaux</h3><p>Nous privilégions les circuits courts et soutenons les producteurs de la région.</p></div>
+  </div>
+</section>
+
+<!-- ================= L'ÉPICERIE ================= -->
+<section class="section story" id="story">
+  <div class="wrap story-inner">
+    <div>
+      <p class="eyebrow">L'épicerie</p>
+      <h2>Notre histoire</h2>
+      <p>Nous sommes une épicerie indépendante de Cholet, née d'une idée simple : bien manger ne devrait pas rimer avec gaspiller. Derrière le comptoir, il y a Ria, qui vous accueille, vous conseille et choisit chaque produit avec soin.</p>
+      <p>Ici, vous remplissez vos contenants à la juste quantité, vous rapportez vos bocaux pour la consigne, et vous trouvez de tout : céréales, légumineuses, fruits secs, épices, café et thé en vrac, miel local, chocolat, produits d'hygiène et d'entretien à recharger. Une vraie variété, sans le superflu.</p>
+      <p>Notre mission : rendre le vrac et le bio accessibles, conviviaux et locaux, un bocal à la fois.</p>
+      <p class="signature">Ria, votre épicière de quartier.</p>
+    </div>
+    <aside class="story-aside">
+      <h3>L'épicerie en bref</h3>
+      <ul>
+        <li><b>Vrac</b> Plus de 150 références au poids</li>
+        <li><b>Local</b> Producteurs de la région</li>
+        <li><b>Consigne</b> Bocaux et bouteilles réutilisés</li>
+        <li><b>Conseil</b> Un accueil, pas un rayon</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="section wrap" id="contact">
+  <p class="eyebrow">Nous trouver</p>
+  <h2>Contact & horaires</h2>
+  <div class="contact-grid">
+    <div>
+      <div class="info-row"><b>Adresse</b><span id="cAddr">90 rue Nationale, 49300 Cholet</span></div>
+      <div class="info-row"><b>Téléphone</b><a id="cPhone" href="tel:0981344050">09 81 34 40 50</a></div>
+      <div class="info-row"><b>E-mail</b><a id="cMail" href="mailto:contact@mmebocal-mrvrac.fr">contact@mmebocal-mrvrac.fr</a></div>
+      <div class="info-row"><b>Horaires</b><span>Mardi – Samedi · 10h-13h30 / 15h-19h</span></div>
+      <div style="margin-top:18px"><a class="btn btn-orange" id="itinBtn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=90+rue+Nationale+49300+Cholet">Itinéraire</a></div>
+    </div>
+    <div class="map"><iframe loading="lazy" src="https://www.google.com/maps?q=90+rue+Nationale+49300+Cholet&output=embed" title="Carte"></iframe></div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <h4>Mme Bocal & Mr Vrac</h4>
+      <p>Épicerie vrac, bio et locale au cœur de Cholet. Vrac au poids, consigne, paniers bio et circuits courts.</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <p><a href="#shop">Nos produits</a><br><a href="#services">Nos services</a><br><a href="#story">L'épicerie</a><br><a href="#contact">Contact</a></p>
+    </div>
+    <div>
+      <h4>Infos</h4>
+      <p id="fAddr">90 rue Nationale, 49300 Cholet</p>
+      <p><a id="fPhone" href="tel:0981344050">09 81 34 40 50</a></p>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">© <span id="yr"></span> Mme Bocal & Mr Vrac · Cholet · Tous droits réservés</div>
+</footer>
+
+<!-- ============ MODALE PRODUIT ============ -->
+<div class="overlay" id="prodOverlay">
+  <div class="modal">
+    <button class="x" id="prodClose" aria-label="Fermer">✕</button>
+    <div class="modal-photo" id="prodPhoto"></div>
+    <div class="modal-body">
+      <p class="cat" id="prodCat"></p>
+      <h3 id="prodName"></h3>
+      <p class="price" id="prodPrice"></p>
+      <p class="desc" id="prodDesc"></p>
+      <div class="field">
+        <label>Quantité souhaitée</label>
+        <div class="qty-row">
+          <input id="prodQty" type="number" min="1" step="1" placeholder="Ex : 500">
+          <select id="prodUnit">
+            <option value="g">grammes</option>
+            <option value="kg">kg</option>
+            <option value="unité">à l'unité</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-orange" id="prodAdd" style="width:100%;justify-content:center">Ajouter à ma réservation</button>
+    </div>
   </div>
 </div>
 
-<!-- ============ PRODUITS ============ -->
-<section class="wrap" id="produits">
-  <h2 class="titre">Nos produits</h2>
-  <p class="sous">Tout notre vrac bio, en circuit-court dès que possible. Les prix sont indicatifs et peuvent varier en magasin. <em>Ajoutez à votre liste de courses pour préparer votre venue.</em></p>
-  <div class="filtres" id="filtres"></div>
-  <div class="grid" id="grille"><p style="color:#888">Chargement des produits…</p></div>
-</section>
-
-<!-- ============ SERVICES ============ -->
-<section class="services">
-  <div class="wrap" id="services">
-    <h2 class="titre">Nos services</h2>
-    <p class="sous">Bien plus qu'une épicerie : un accompagnement vers une consommation plus responsable.</p>
-    <div class="svc-grid">
-      <div class="svc"><div class="svc__ico">🫙</div><h3>Vrac & au poids</h3><p>Servez-vous la juste quantité, sans emballage inutile. Apportez vos contenants !</p></div>
-      <div class="svc"><div class="svc__ico">♻️</div><h3>Consigne</h3><p>Bocaux et bouteilles consignés : vous ramenez, on réutilise. Le verre a une seconde vie.</p></div>
-      <div class="svc"><div class="svc__ico">🧺</div><h3>Paniers bio</h3><p>Des paniers de produits bio et locaux, à composer selon la saison et vos envies.</p></div>
-      <div class="svc"><div class="svc__ico">🤝</div><h3>Producteurs locaux</h3><p>Nous privilégions les circuits-courts et soutenons les producteurs de la région.</p></div>
+<!-- ============ PANIER / RÉSERVATION ============ -->
+<div class="overlay" id="cartOverlay">
+  <div class="modal">
+    <button class="x" id="cartClose" aria-label="Fermer">✕</button>
+    <div class="modal-body">
+      <p class="eyebrow">Click & collect</p>
+      <h3>Ma réservation</h3>
+      <p class="desc">Vos produits sont mis de côté <b>1 heure</b> en magasin. Ajoutez autant de produits que vous voulez avant d'envoyer.</p>
+      <ul class="cart-list" id="cartList"></ul>
+      <div class="field"><label>Votre nom</label><input id="cName" placeholder="Ex : Bryan Mendy"></div>
+      <div class="field"><label>Votre numéro de téléphone</label><input id="cPhoneIn" type="tel" placeholder="06 12 34 56 78"></div>
+      <div class="notice"><b>Important :</b> après avoir cliqué, WhatsApp s'ouvre avec votre message déjà écrit. Vous devez <b>valider l'envoi</b> (bouton vert) pour que la réservation soit prise en compte.</div>
+      <button class="btn btn-primary" id="cartSend" style="width:100%;justify-content:center">Envoyer ma réservation sur WhatsApp</button>
+      <button class="btn btn-ghost" id="cartContinue" style="width:100%;justify-content:center;margin-top:10px">Continuer mes achats</button>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ============ HISTOIRE ============ -->
-<section class="wrap" id="histoire">
-  <div class="histoire">
-    <div>
-      <h2 class="titre">L'épicerie</h2>
-      <p class="sous">Mme Bocal & Mr Vrac, c'est une épicerie indépendante de Cholet, née de l'idée de Cécile Baudinou et Philippe Breton : proposer une consommation plus responsable grâce au vrac, à la consigne et à des produits 100 % bio et locaux.</p>
-      <p style="color:#3c4a36">Leur mission : réduire les déchets, soutenir les producteurs de la région et accompagner les consommateurs vers un mode de vie plus durable. Avec leur nom malicieux et leur duo engagé, ils incarnent une nouvelle façon de faire ses courses : simple, éthique et sans emballage inutile.</p>
-    </div>
-    <div class="histoire__card">
-      <h3>Nos valeurs</h3>
-      <p>Une identité fraîche, reconnaissable et engagée, à l'image d'une épicerie moderne qui allie plaisir, responsabilité et proximité.</p>
-      <div class="valeurs">
-        <span class="valeur">🌿 100 % bio</span>
-        <span class="valeur">📦 Zéro-déchet</span>
-        <span class="valeur">📍 Local</span>
-        <span class="valeur">♻️ Consigne</span>
-        <span class="valeur">🤝 Circuit-court</span>
-      </div>
+<!-- ============ CONFIRMATION ============ -->
+<div class="overlay" id="okOverlay">
+  <div class="modal">
+    <button class="x" id="okClose" aria-label="Fermer">✕</button>
+    <div class="modal-body" style="text-align:center">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto">✓</div>
+      <h3 style="margin-top:8px">Votre réservation est prête</h3>
+      <p class="desc">Pour qu'elle soit bien prise en compte, <b>validez l'envoi du message dans WhatsApp</b>. Si l'application ne s'est pas ouverte ou en cas de doute, appelez le magasin au <b id="okPhone">09 81 34 40 50</b> pour confirmer.</p>
+      <button class="btn btn-primary" id="okBtn" style="justify-content:center">C'est noté</button>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ============ CONTACT ============ -->
-<section class="contact">
-  <div class="wrap" id="contact">
-    <h2 class="titre">Nous trouver</h2>
-    <p class="sous" style="color:rgba(255,255,255,.85)">En plein centre-ville, place A. Guérineau (face au LCL), à deux pas du parking Mondement.</p>
-    <div class="contact-grid">
-      <div class="contact-block"><h3>Adresse</h3><p id="c-adresse">90 rue Nationale<br>49300 Cholet</p></div>
-      <div class="contact-block"><h3>Horaires</h3><p id="c-horaires">Mardi au Samedi<br>10h00 – 13h30<br>15h00 – 19h00<br><em style="opacity:.7">Fermé dim. & lun.</em></p></div>
-      <div class="contact-block">
-        <h3>Contact</h3>
-        <p><a id="c-tel" href="tel:+33981344050">09 81 34 40 50</a><br>
-        <a id="c-email" href="mailto:mmebocaletmrvrac@hotmail.com">mmebocaletmrvrac@hotmail.com</a></p>
-        <p style="margin-top:8px">
-          <a id="c-insta" href="https://www.instagram.com/mmebocaletmrvrac/" target="_blank" rel="noopener">Instagram</a> ·
-          <a id="c-fb" href="https://www.facebook.com/mmebocaletmrvrac" target="_blank" rel="noopener">Facebook</a>
-        </p>
-      </div>
-      <div class="contact-block" style="grid-column:span 1">
-        <iframe class="map" title="Carte — Mme Bocal & Mr Vrac, Cholet" loading="lazy"
-          src="https://www.google.com/maps?q=90%20rue%20Nationale%2049300%20Cholet&output=embed"></iframe>
-      </div>
+<!-- ============ ALERTE RÉAPPRO ============ -->
+<div class="overlay" id="alertOverlay">
+  <div class="modal">
+    <button class="x" id="alertClose" aria-label="Fermer">✕</button>
+    <div class="modal-body">
+      <p class="eyebrow">Bientôt de retour</p>
+      <h3 id="alertTitle">Prévenez-moi</h3>
+      <p class="desc">Laissez vos coordonnées : nous vous envoyons un message dès que le produit revient.</p>
+      <div class="field"><label>Votre nom</label><input id="aName" placeholder="Ex : Bryan Mendy"></div>
+      <div class="field"><label>Votre numéro de téléphone</label><input id="aPhone" type="tel" placeholder="06 12 34 56 78"></div>
+      <label style="display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--muted);cursor:pointer">
+        <input type="checkbox" id="aConsent" style="width:auto;margin-top:3px">
+        <span>J'accepte d'être recontacté(e) par message dès que ce produit est de nouveau disponible.</span>
+      </label>
+      <button class="btn btn-orange" id="aSend" style="width:100%;justify-content:center;margin-top:16px">Me prévenir</button>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-  <div class="footer__in">
-    <div>
-      <div class="logo logo--blanc">mme b<span class="esp">&amp;</span>cal · mr vrac</div>
-      <small>Épicerie bio, vrac & zéro-déchet · Cholet (49)</small>
-    </div>
-    <div style="text-align:right">
-      <a href="#produits">Produits</a> · <a href="#services">Services</a> · <a href="#contact">Contact</a> · <a href="mentions-legales.html">Mentions légales</a>
-      <small>© <span id="annee"></span> Mme Bocal & Mr Vrac — Tous droits réservés.</small>
-    </div>
-  </div>
-</footer>
+<!-- ============ ZOOM PHOTO ============ -->
+<div class="lightbox" id="lightbox"><img id="lightboxImg" alt=""></div>
 
-<!-- ============ LISTE DE COURSES ============ -->
-<button class="fab" id="fab">🧺 Ma liste <span class="count" id="count">0</span></button>
-<div class="overlay" id="overlay"></div>
-<aside class="panel" id="panel">
-  <div class="panel__h"><h3>🧺 Ma liste de courses</h3><button class="panel__close" id="panelClose">×</button></div>
-  <div class="panel__list" id="panelList"></div>
-  <div class="panel__foot">
-    <p style="font-size:13px;color:#888;margin-bottom:10px">Présentez cette liste en magasin ou envoyez-la nous.</p>
-    <a class="btn btn--o" id="sendList" style="width:100%;justify-content:center" href="#">Envoyer par e-mail</a>
-  </div>
-</aside>
+<!-- ============ PANIER FLOTTANT + RETOUR HAUT + TOAST ============ -->
+<button class="btn btn-orange cart-fab" id="cartFab">Ma réservation <span class="n" id="cartFabN">0</span></button>
+<button class="totop" id="totop" aria-label="Revenir en haut">↑</button>
+<div class="toast" id="toast"></div>
 
-<div class="toast" id="toast">✓ Ajouté à la liste</div>
-
-<script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <script>
-const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
-document.getElementById('annee').textContent = new Date().getFullYear();
+const db = supabase.createClient(window.SUPA.url, window.SUPA.key);
+const WHATSAPP_DEFAUT = "33762147567";
+let SETTINGS = {}, PRODUCTS = [], CART = [], activeCat = "Tous", activeProduct = null;
 
-/* ---- Menu mobile ---- */
-const burger=document.getElementById('burger'),menu=document.getElementById('menu');
-burger.onclick=()=>menu.classList.toggle('open');
-menu.querySelectorAll('a').forEach(a=>a.onclick=()=>menu.classList.remove('open'));
+document.getElementById('yr').textContent = new Date().getFullYear();
 
-/* ---- Badge de disponibilité (règle : 0=Épuisé, 1-5=Limité, 6+=En stock) ---- */
-function dispo(q){
-  if(q<=0)  return {cls:'tag--epuise', txt:'Épuisé'};
-  if(q<=5)  return {cls:'tag--limite', txt:'Stock limité'};
-  return      {cls:'tag--stock',  txt:'En stock'};
+/* ---------- util ---------- */
+const $ = id => document.getElementById(id);
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),3200); }
+function euro(n){ return Number(n||0).toFixed(2).replace('.',','); }
+function unitTxt(u){ return (u||'').replace(/^\//,''); }
+function stockClass(q){ return q===0?'out':q<=5?'warn':'ok'; }
+function stockLabel(q){ return q===0?'Épuisé':q<=5?'Stock limité':'En stock'; }
+function photoHTML(url,big){ return url ? `<img src="${url}" alt="">` : `<span class="noimg">Photo à venir</span>`; }
+
+/* ---------- chargement ---------- */
+async function loadSettings(){
+  const {data} = await db.from('site_settings').select('key,value');
+  (data||[]).forEach(r=>SETTINGS[r.key]=r.value);
+  if(SETTINGS.mascotte_url) $('mascotte').src = SETTINGS.mascotte_url;
+  if(SETTINGS.phone){ $('cPhone').textContent=SETTINGS.phone; $('cPhone').href='tel:'+SETTINGS.phone.replace(/\s/g,'');
+    $('fPhone').textContent=SETTINGS.phone; $('fPhone').href='tel:'+SETTINGS.phone.replace(/\s/g,''); $('okPhone').textContent=SETTINGS.phone; }
+  if(SETTINGS.email){ $('cMail').textContent=SETTINGS.email; $('cMail').href='mailto:'+SETTINGS.email; }
+  if(SETTINGS.address){ $('cAddr').textContent=SETTINGS.address; $('fAddr').textContent=SETTINGS.address; }
+  refreshOpenBadge();
+}
+async function loadProducts(){
+  const {data,error} = await db.from('products').select('*').eq('visible',true).order('sort_order');
+  if(error){ $('track').innerHTML=`<div class="empty">Impossible de charger les produits pour le moment.</div>`; return; }
+  PRODUCTS = data||[];
+  buildFilter(); render();
 }
 
-/* ---- Liste de courses (mémoire de session, côté navigateur) ---- */
-let liste=[];
-const countEl=document.getElementById('count'),panel=document.getElementById('panel'),overlay=document.getElementById('overlay');
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg||'✓ Ajouté à la liste';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
-function openPanel(o){panel.classList.toggle('open',o);overlay.classList.toggle('open',o);}
-document.getElementById('fab').onclick=()=>{renderList();openPanel(true);};
-document.getElementById('panelClose').onclick=()=>openPanel(false);
-overlay.onclick=()=>openPanel(false);
-function addToList(p){liste.push(p);countEl.textContent=liste.length;toast('✓ '+p.name+' ajouté');}
-function renderList(){
-  const box=document.getElementById('panelList');
-  if(!liste.length){box.innerHTML='<p class="panel__empty">Votre liste est vide.<br>Parcourez les produits et ajoutez vos envies 🌿</p>';return;}
-  box.innerHTML=liste.map((p,i)=>`<div class="panel__row"><span>${p.name}</span><button onclick="rm(${i})">🗑</button></div>`).join('');
+/* ---------- bandeau ouverture ---------- */
+function toMin(s){ const [h,m]=s.split(':').map(Number); return h*60+m; }
+function fmtLeft(m){ const h=Math.floor(m/60), mm=m%60; return h>0?(mm>0?`${h} h ${mm}`:`${h} h`):`${mm} min`; }
+function refreshOpenBadge(){
+  let hours={}; try{ hours=JSON.parse(SETTINGS.hours||'{}'); }catch(e){}
+  const now=new Date(), day=now.getDay(), nm=now.getHours()*60+now.getMinutes();
+  const slots=(hours[day]||[]).map(([a,b])=>[toMin(a),toMin(b)]);
+  let state='closed', label='Fermé aujourd\'hui';
+  for(const [a,b] of slots){ if(nm>=a && nm<b){ const left=b-nm;
+    if(left<=60){ state='closing'; label='Ferme dans '+fmtLeft(left); } else { state='open'; label='Ouvert actuellement'; } } }
+  if(state==='closed'){ let best=null;
+    for(const [a] of slots){ if(a>nm){ const d=a-nm; if(d<=120 && (best===null||d<best)) best=d; } }
+    if(best!==null){ state='soon'; label='Ouvre dans '+fmtLeft(best); } }
+  ['openBadge','openBadgeMobile'].forEach(id=>{ const el=$(id); if(!el) return;
+    el.className='open-badge'+(id==='openBadgeMobile'?' mobile-badge':'')+(state==='open'?' is-open':state==='closing'?' is-closing':state==='soon'?' is-soon':'');
+    el.querySelector('.lbl').textContent=label; });
 }
-function rm(i){liste.splice(i,1);countEl.textContent=liste.length;renderList();}
-document.getElementById('sendList').onclick=e=>{
-  e.preventDefault();
-  const corps=liste.length?liste.map(p=>'- '+p.name).join('%0D%0A'):'(liste vide)';
-  window.location.href=`mailto:mmebocaletmrvrac@hotmail.com?subject=Ma liste de courses&body=Bonjour,%0D%0A%0D%0AVoici ma liste :%0D%0A${corps}%0D%0A%0D%0AMerci !`;
+
+/* ---------- filtre ---------- */
+function buildFilter(){
+  const cats=['Tous',...new Set(PRODUCTS.filter(p=>p.quantity>0).map(p=>p.category))];
+  const menu=$('filterMenu'); menu.innerHTML='';
+  cats.forEach(c=>{ const b=document.createElement('button'); b.textContent=c; if(c===activeCat) b.className='active';
+    b.onclick=()=>{ activeCat=c; $('filterMenu').classList.remove('open'); buildFilter(); render(); }; menu.appendChild(b); });
+}
+
+/* ---------- rendu carrousel + épuisés ---------- */
+function render(){
+  const q=($('search').value||'').toLowerCase().trim();
+  const inStock = PRODUCTS.filter(p=>p.quantity>0)
+    .filter(p=>activeCat==='Tous'||p.category===activeCat)
+    .filter(p=>!q || p.name.toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q));
+  const track=$('track'); track.innerHTML='';
+  if(!inStock.length){ track.innerHTML='<div class="empty">Aucun produit ne correspond à votre recherche.</div>'; }
+  inStock.forEach(p=>{
+    const c=document.createElement('div'); c.className='card'; c.onclick=()=>openProduct(p);
+    c.innerHTML=`<div class="ph">${photoHTML(p.photo_url)}
+        <span class="badge ${stockClass(p.quantity)}">${stockLabel(p.quantity)}</span>
+        ${p.is_local?'<span class="badge local">Local</span>':''}</div>
+      <div class="body"><div class="cat">${p.category}</div><div class="name">${p.name}</div>
+        <div class="price">${euro(p.price)} € <small>/ ${unitTxt(p.unit)}</small></div></div>`;
+    track.appendChild(c);
+  });
+  $('filterCount').textContent=inStock.length;
+  updateArrows();
+
+  // épuisés
+  const out = PRODUCTS.filter(p=>p.quantity===0);
+  const sec=$('soldout'), grid=$('soldoutGrid');
+  if(out.length){ sec.style.display=''; grid.innerHTML='';
+    out.forEach(p=>{ const d=document.createElement('div'); d.className='so-card';
+      d.innerHTML=`<div class="so-name">${p.name}</div><div class="so-tag">Épuisé</div>
+        <button class="btn btn-orange" style="justify-content:center">Prévenez-moi</button>`;
+      d.querySelector('button').onclick=()=>openAlert(p); grid.appendChild(d); });
+  } else sec.style.display='none';
+}
+function updateArrows(){
+  const t=$('track');
+  $('arrowPrev').disabled = t.scrollLeft<=4;
+  $('arrowNext').disabled = t.scrollLeft >= t.scrollWidth-t.clientWidth-4;
+}
+$('track').addEventListener('scroll',updateArrows);
+$('arrowPrev').onclick=()=>$('track').scrollBy({left:-300,behavior:'smooth'});
+$('arrowNext').onclick=()=>$('track').scrollBy({left:300,behavior:'smooth'});
+$('search').addEventListener('input',render);
+$('filterBtn').onclick=e=>{ e.stopPropagation(); $('filterMenu').classList.toggle('open'); };
+document.addEventListener('click',()=>$('filterMenu').classList.remove('open'));
+
+/* ---------- modale produit ---------- */
+function openProduct(p){
+  activeProduct=p;
+  $('prodPhoto').innerHTML=photoHTML(p.photo_url,true);
+  $('prodPhoto').onclick=()=>{ if(p.photo_url){ $('lightboxImg').src=p.photo_url; $('lightbox').classList.add('open'); } };
+  $('prodCat').textContent=p.category;
+  $('prodName').textContent=p.name;
+  $('prodPrice').textContent=`${euro(p.price)} € / ${unitTxt(p.unit)}`;
+  $('prodDesc').textContent=p.description||'';
+  $('prodQty').value='';
+  // unité par défaut selon le produit
+  const u=$('prodUnit'); u.value = p.unit==='unité' ? 'unité' : (p.unit==='kg'?'g':'unité'); if(p.unit==='100g') u.value='g';
+  $('prodOverlay').classList.add('open');
+}
+$('prodClose').onclick=()=>$('prodOverlay').classList.remove('open');
+$('lightbox').onclick=()=>$('lightbox').classList.remove('open');
+$('prodAdd').onclick=()=>{
+  const qty=parseFloat($('prodQty').value);
+  if(!qty||qty<=0){ toast('Indiquez une quantité.'); return; }
+  CART.push({name:activeProduct.name, qty, unit:$('prodUnit').value});
+  $('prodOverlay').classList.remove('open');
+  refreshCart(); toast('Ajouté à votre réservation.');
 };
 
-/* ---- Réglages éditables (horaires, tél...) ---- */
-async function loadSettings(){
-  const {data}=await sb.from('settings').select('*');
-  if(!data) return;
-  const s={};data.forEach(r=>s[r.key]=r.value);
-  if(s.telephone){document.getElementById('q-tel').textContent=s.telephone;document.getElementById('c-tel').textContent=s.telephone;document.getElementById('c-tel').href='tel:'+s.telephone.replace(/\s/g,'');}
-  if(s.email){document.getElementById('c-email').textContent=s.email;document.getElementById('c-email').href='mailto:'+s.email;}
-  if(s.adresse)document.getElementById('c-adresse').innerHTML=s.adresse.replace(',','<br>');
-  if(s.horaires)document.getElementById('q-horaires').textContent=s.horaires.split('—')[0];
-  if(s.instagram)document.getElementById('c-insta').href=s.instagram;
-  if(s.facebook)document.getElementById('c-fb').href=s.facebook;
+/* ---------- panier ---------- */
+function refreshCart(){
+  $('cartFabN').textContent=CART.length;
+  $('cartFab').classList.toggle('show',CART.length>0);
+  const list=$('cartList'); list.innerHTML='';
+  CART.forEach((it,i)=>{ const li=document.createElement('li');
+    li.innerHTML=`<span><span class="ci-name">${it.name}</span><br><span class="ci-qty">${it.qty} ${it.unit}</span></span>
+      <button class="ci-del" aria-label="Retirer">✕</button>`;
+    li.querySelector('.ci-del').onclick=()=>{ CART.splice(i,1); refreshCart(); }; list.appendChild(li); });
 }
+$('cartFab').onclick=()=>{ if(!CART.length){ toast('Votre réservation est vide.'); return; } $('cartOverlay').classList.add('open'); };
+$('cartClose').onclick=$('cartContinue').onclick=()=>$('cartOverlay').classList.remove('open');
 
-/* ---- Produits ---- */
-let tous=[],filtre='Tout';
-async function loadProducts(){
-  const {data,error}=await sb.from('products').select('*').eq('visible',true).order('category').order('name');
-  if(error){document.getElementById('grille').innerHTML='<p style="color:#c0392b">Erreur de chargement. Vérifie config.js et le schéma Supabase.</p>';return;}
-  tous=data||[];
-  renderFiltres();renderProducts();
-}
-function renderFiltres(){
-  const cats=['Tout',...new Set(tous.map(p=>p.category))];
-  document.getElementById('filtres').innerHTML=cats.map(c=>
-    `<button class="chip ${c===filtre?'actif':''}" onclick="setFiltre('${c.replace(/'/g,"\\'")}')">${c}</button>`).join('');
-}
-function setFiltre(c){filtre=c;renderFiltres();renderProducts();}
-function renderProducts(){
-  const list=filtre==='Tout'?tous:tous.filter(p=>p.category===filtre);
-  if(!list.length){document.getElementById('grille').innerHTML='<p style="color:#888">Aucun produit dans cette catégorie pour le moment.</p>';return;}
-  document.getElementById('grille').innerHTML=list.map(p=>{
-    const d=dispo(p.qty);const epuise=p.qty<=0;
-    const img=p.image_url
-      ? `<img src="${p.image_url}" alt="${p.name}" loading="lazy">`
-      : `<div class="card__ph">🫙</div>`;
-    const prix=p.price!=null?`<span class="card__price">${Number(p.price).toFixed(2)} €<small> ${p.unit||''}</small></span>`:'<span></span>';
-    return `<article class="card">
-      <div class="card__img">${img}
-        <div class="card__badges">
-          <span class="tag ${d.cls}">${d.txt}</span>
-          ${p.local?'<span class="tag tag--local">Local</span>':''}
-        </div>
-      </div>
-      <div class="card__body">
-        <span class="card__cat">${p.category}</span>
-        <span class="card__name">${p.name}</span>
-        ${p.description?`<span class="card__desc">${p.description}</span>`:''}
-        <div class="card__foot">
-          ${prix}
-          <button class="card__add" ${epuise?'disabled style="opacity:.4;cursor:not-allowed"':''}
-            onclick='addToList(${JSON.stringify({name:p.name})})'>+ Liste</button>
-        </div>
-      </div>
-    </article>`;
-  }).join('');
-}
+$('cartSend').onclick=async()=>{
+  const name=$('cName').value.trim(), phone=$('cPhoneIn').value.trim();
+  if(!CART.length){ toast('Votre réservation est vide.'); return; }
+  if(!name){ toast('Indiquez votre nom.'); return; }
+  if(!phone){ toast('Indiquez votre téléphone.'); return; }
+  // journal côté gérant (best effort)
+  try{ await db.from('reservations').insert({client_name:name, client_phone:phone, items:CART}); }catch(e){}
+  const lignes=CART.map(it=>`• ${it.name} : ${it.qty} ${it.unit}`).join('%0A');
+  const msg=`Bonjour, je souhaite mettre de côté (1h) :%0A${lignes}%0A%0ANom : ${name}%0ATél : ${phone}`;
+  const num=(SETTINGS.whatsapp||WHATSAPP_DEFAUT).replace(/\D/g,'');
+  window.open(`https://wa.me/${num}?text=${msg}`,'_blank');
+  $('cartOverlay').classList.remove('open');
+  $('okOverlay').classList.add('open');
+  CART=[]; refreshCart(); $('cName').value=''; $('cPhoneIn').value='';
+};
+$('okClose').onclick=$('okBtn').onclick=()=>$('okOverlay').classList.remove('open');
 
-loadSettings();
-loadProducts();
+/* ---------- alerte réappro ---------- */
+let alertProduct=null;
+function openAlert(p){ alertProduct=p; $('alertTitle').textContent='Prévenez-moi : '+p.name;
+  $('aName').value=''; $('aPhone').value=''; $('aConsent').checked=false; $('alertOverlay').classList.add('open'); }
+$('alertClose').onclick=()=>$('alertOverlay').classList.remove('open');
+$('aSend').onclick=async()=>{
+  const name=$('aName').value.trim(), phone=$('aPhone').value.trim();
+  if(!name){ toast('Indiquez votre nom.'); return; }
+  if(!phone){ toast('Indiquez votre téléphone.'); return; }
+  if(!$('aConsent').checked){ toast('Cochez la case pour être recontacté(e).'); return; }
+  const {error}=await db.from('restock_alerts').insert({
+    product_id:alertProduct.id, product_name:alertProduct.name, client_name:name, client_phone:phone, consent:true });
+  if(error){ toast('Une erreur est survenue, réessayez.'); return; }
+  $('alertOverlay').classList.remove('open');
+  toast('C\'est noté ! Nous vous préviendrons dès le retour du produit.');
+};
+
+/* ---------- menu mobile / retour haut ---------- */
+$('burger').onclick=()=>$('nav').classList.toggle('open');
+$('nav').querySelectorAll('a').forEach(a=>a.onclick=()=>$('nav').classList.remove('open'));
+const totop=$('totop');
+window.addEventListener('scroll',()=>totop.classList.toggle('show',window.scrollY>500));
+totop.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+/* ---------- init ---------- */
+loadSettings(); loadProducts();
+setInterval(refreshOpenBadge,60000);
 </script>
 </body>
 </html>
