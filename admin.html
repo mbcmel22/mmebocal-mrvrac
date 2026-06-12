@@ -7,7 +7,7 @@
 <link rel="icon" href="logo.png">
 <link rel="stylesheet" href="styles.css">
 <style>
-  body{background:var(--cream-d)}
+  body{background:var(--cream-d);padding-top:0}
   .admin-bar{background:var(--green);color:#fff;padding:14px 0}
   .admin-bar .wrap{display:flex;align-items:center;gap:14px}
   .admin-bar img{height:30px;background:#fff;padding:5px 9px;border-radius:9px}
@@ -40,7 +40,7 @@
   .fg-name{flex:1}.fg-name input{width:100%}
   .fg input,.fg select{padding:9px 11px;border:1px solid var(--line);border-radius:9px;font-family:var(--body);font-size:.95rem}
   .fg:not(.fg-name){flex:0 0 auto}
-  .fg .f-cat{width:170px}.fg-price input{width:90px}.fg-unit select{width:120px}
+  .fg .f-cat{width:210px}.fg-price input{width:90px}.fg-unit select{width:120px}
   .stockctrl{display:flex;align-items:center;gap:6px}
   .stockctrl button{width:34px;height:38px;border-radius:9px;border:1px solid var(--line);background:var(--cream);cursor:pointer;font-size:1.2rem;color:var(--green)}
   .stockctrl button:hover{background:var(--green);color:#fff}
@@ -159,7 +159,7 @@
       <div class="card-set">
         <h3>Images des services</h3>
         <p class="hint" style="margin-bottom:14px">Personnalisez l'icône ou la photo en haut de chaque service de la page d'accueil.</p>
-        <div id="svcImages" style="display:grid;grid-template-columns:1fr 1fr;gap:16px"></div>
+        <div id="svcImages" style="display:flex;flex-direction:column;gap:12px"></div>
       </div>
       <div class="card-set">
         <h3>Coordonnées</h3>
@@ -225,11 +225,11 @@ function buildSvcImages(){
   SVC_LABELS.forEach((label,i)=>{
     const key='svc_img_'+i; const cur=SETTINGS[key]||'';
     const cell=document.createElement('div');
-    cell.style.cssText='display:flex;gap:12px;align-items:center;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px';
-    cell.innerHTML=`<div style="width:52px;height:52px;border-radius:11px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden">
+    cell.style.cssText='display:flex;gap:12px;align-items:center;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px;max-width:100%;overflow:hidden';
+    cell.innerHTML=`<div style="flex:0 0 52px;width:52px;height:52px;border-radius:11px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden">
         ${cur?`<img src="${cur}" style="width:100%;height:100%;object-fit:contain;padding:6px">`:'<span style="font-size:.62rem;color:var(--muted);text-align:center">icône<br>défaut</span>'}</div>
-      <div style="flex:1;min-width:0"><div style="font-family:var(--display);color:var(--green);font-weight:500;font-size:.9rem">${label}</div>
-        <input type="file" accept="image/*" capture="environment" style="font-size:.8rem;max-width:100%"></div>`;
+      <div style="flex:1;min-width:0"><div style="font-family:var(--display);color:var(--green);font-weight:500;font-size:.9rem;margin-bottom:4px">${label}</div>
+        <input type="file" accept="image/*" capture="environment" style="font-size:.8rem;width:100%;max-width:100%"></div>`;
     cell.querySelector('input').onchange=async e=>{ const f=e.target.files[0]; if(!f) return; toast('Envoi…');
       try{ const url=await uploadPhoto(f); await setVal(key,url); SETTINGS[key]=url; buildSvcImages(); toast('Image enregistrée.'); }
       catch(err){ toast('Échec de l\'envoi.'); } };
@@ -272,7 +272,8 @@ function productRow(p){
       <div class="fg fg-name"><label>Nom du produit</label>
         <input class="f-name" value="${(p.name||'').replace(/"/g,'&quot;')}" placeholder="Ex : Riz basmati bio"></div>
       <div class="frow">
-        <div class="fg"><label>Rayon</label><input class="f-cat" list="catlist" value="${(p.category||'').replace(/"/g,'&quot;')}" placeholder="Choisir ou saisir"></div>
+        <div class="fg"><label>Rayon</label>
+          <select class="f-cat">${(()=>{const cs=categories(); const has=cs.includes(p.category); return cs.map(c=>`<option ${c===p.category?'selected':''}>${c}</option>`).join('')+(p.category&&!has?`<option selected>${p.category}</option>`:'')+'<option value="__new__">+ Nouveau rayon…</option>';})()}</select></div>
         <div class="fg fg-price"><label>Prix (€)</label><input class="f-price" type="number" step="0.01" value="${p.price||0}"></div>
         <div class="fg fg-unit"><label>Unité</label>
           <select class="f-unit">${(p.unit&&!['kg','100g','unité','L'].includes(p.unit)?[p.unit]:[]).concat(['kg','100g','unité','L']).map(u=>`<option ${p.unit===u?'selected':''}>${u}</option>`).join('')}</select></div>
@@ -289,10 +290,17 @@ function productRow(p){
       <button class="del">Supprimer</button>
     </div>`;
   const qtyEl=row.querySelector('.f-qty');
+  const catSel=row.querySelector('.f-cat');
+  catSel.onchange=()=>{ if(catSel.value==='__new__'){
+    const v=(prompt('Nom du nouveau rayon :')||'').trim();
+    if(v){ const o=document.createElement('option'); o.textContent=v; o.selected=true; catSel.insertBefore(o,catSel.lastElementChild); }
+    else { catSel.selectedIndex=0; }
+  }};
   row.querySelector('.minus').onclick=()=>qtyEl.value=Math.max(0,(+qtyEl.value||0)-1);
   row.querySelector('.plus').onclick=()=>qtyEl.value=(+qtyEl.value||0)+1;
   row.querySelector('.save').onclick=async()=>{
-    const upd={name:row.querySelector('.f-name').value.trim(),category:row.querySelector('.f-cat').value.trim(),
+    const catVal=row.querySelector('.f-cat').value;
+    const upd={name:row.querySelector('.f-name').value.trim(),category:catVal==='__new__'?(p.category||''):catVal,
       price:parseFloat(row.querySelector('.f-price').value)||0,unit:row.querySelector('.f-unit').value,
       qty:parseInt(qtyEl.value)||0,local:row.querySelector('.f-local').checked};
     const {error}=await db.from('products').update(upd).eq('id',p.id);
