@@ -25,6 +25,7 @@ h1,h2,h3,.display{font-family:var(--display);color:var(--green);line-height:1.05
 .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
 .section{padding:64px 0}
 .bg-white{background:#fff}
+.bg-cream{background:var(--cream-d)}
 .bg-soft{background:#eef1e8}
 .eyebrow{font-family:var(--display);font-weight:600;color:var(--orange);letter-spacing:.04em;font-size:.86rem;text-transform:uppercase;margin:0 0 6px}
 .lead{color:var(--muted);max-width:620px;margin:8px 0 0}
@@ -78,7 +79,7 @@ nav.links a:hover{border-color:var(--orange)}
 /* ===========================================================
    HERO
    =========================================================== */
-.hero{background:linear-gradient(180deg,#ffffff 0%,#fdfbf6 45%,var(--cream) 100%);position:relative;overflow:hidden}
+.hero{background:linear-gradient(180deg,var(--cream) 0%,#fdfbf6 40%,var(--cream) 100%);position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;top:-120px;right:-120px;width:340px;height:340px;border-radius:50%;
   background:radial-gradient(circle,rgba(53,88,43,.06),transparent 70%);pointer-events:none}
 .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:center;padding:60px 0 70px}
@@ -156,7 +157,7 @@ nav.links a:hover{border-color:var(--orange)}
 .soldout{background:#eef1e8}
 .soldout-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:22px}
 .soldout-card .body{display:flex;flex-direction:column;gap:4px}
-.so-btn{margin-top:12px;width:100%;justify-content:center}
+.so-btn{margin-top:12px;align-self:flex-start}
 
 /* ===========================================================
    SERVICES (sans pictogrammes)
@@ -293,7 +294,7 @@ footer a:hover{color:#fff}
   .arrow{display:none}                 /* mobile = glisser au doigt */
   .card{flex-basis:82%}
   .card .ph{height:170px}
-  .section{padding:46px 0}
+  .section{padding:56px 0}
   .modal-photo{height:240px}
   .qty-row{flex-wrap:wrap}.qty-row select{flex:1}
   .wrap{padding:0 18px}
