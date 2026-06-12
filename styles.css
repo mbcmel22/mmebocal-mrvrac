@@ -24,6 +24,8 @@ a{color:inherit;text-decoration:none}
 h1,h2,h3,.display{font-family:var(--display);color:var(--green);line-height:1.05;margin:0}
 .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
 .section{padding:64px 0}
+.bg-white{background:#fff}
+.bg-soft{background:#eef1e8}
 .eyebrow{font-family:var(--display);font-weight:600;color:var(--orange);letter-spacing:.04em;font-size:.86rem;text-transform:uppercase;margin:0 0 6px}
 .lead{color:var(--muted);max-width:620px;margin:8px 0 0}
 
@@ -63,12 +65,22 @@ nav.links a:hover{border-color:var(--orange)}
 /* ===========================================================
    HERO
    =========================================================== */
-.hero{padding:54px 0 40px;text-align:center}
-.hero .mascotte{width:188px;height:auto;margin:0 auto 18px;filter:drop-shadow(0 12px 24px rgba(53,88,43,.12))}
-.hero h1{font-size:clamp(2.1rem,5vw,3.3rem)}
-.hero .tag{font-family:var(--display);font-weight:500;color:var(--orange);font-size:1.25rem;margin-top:6px}
-.hero .sub{color:var(--muted);margin:14px auto 0;max-width:560px}
-.hero .hero-cta{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero{background:linear-gradient(180deg,#ffffff 0%,#fdfbf6 45%,var(--cream) 100%);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;top:-120px;right:-120px;width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(53,88,43,.06),transparent 70%);pointer-events:none}
+.hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:center;padding:60px 0 70px}
+.hero-text h1{font-size:clamp(2rem,4.4vw,3.15rem);margin-top:8px}
+.hero-text .tag{font-family:var(--display);font-weight:600;color:var(--orange);font-size:1.2rem;margin-top:10px}
+.hero-text .sub{color:var(--muted);margin:16px 0 0;max-width:520px}
+.hero-text .hero-cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+.hero-visual{display:flex;justify-content:center}
+.hero-card{position:relative;width:min(330px,100%);aspect-ratio:1;background:#fff;border:1px solid var(--line);
+  border-radius:32px;box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center}
+.hero-card::before{content:"";position:absolute;right:-22px;bottom:-22px;width:130px;height:130px;border-radius:50%;
+  background:radial-gradient(circle,rgba(249,134,63,.22),transparent 72%)}
+.hero-card::after{content:"";position:absolute;left:18px;top:18px;width:46px;height:46px;border-radius:50%;
+  background:rgba(53,88,43,.05)}
+.mascotte{width:158px;height:auto;filter:drop-shadow(0 10px 18px rgba(53,88,43,.12))}
 
 /* ===========================================================
    PRODUITS — barre d'outils, carrousel, cartes
@@ -107,9 +119,10 @@ nav.links a:hover{border-color:var(--orange)}
 
 /* Carte produit — photo bien visible (réf. image fournie) */
 .card{flex:0 0 248px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);
-  border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:.18s}
+  border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:.18s;
+  box-shadow:0 6px 18px rgba(53,88,43,.06)}
 .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.card .ph{position:relative;height:188px;background:#fff;display:flex;align-items:center;justify-content:center;padding:14px}
+.card .ph{position:relative;height:188px;background:var(--cream);display:flex;align-items:center;justify-content:center;padding:14px}
 .card .ph img{max-height:100%;width:auto;object-fit:contain}
 .card .ph .noimg{font-family:var(--display);color:var(--muted);font-size:.88rem;font-weight:500}
 .badge{position:absolute;top:10px;left:10px;font-family:var(--display);font-weight:600;font-size:.7rem;
@@ -127,7 +140,7 @@ nav.links a:hover{border-color:var(--orange)}
 /* ===========================================================
    SECTION VICTIMES DE LEUR SUCCÈS (épuisés)
    =========================================================== */
-.soldout{background:var(--cream-d)}
+.soldout{background:#eef1e8}
 .soldout-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:22px}
 .so-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:16px;display:flex;
   flex-direction:column;gap:10px}
@@ -254,12 +267,26 @@ footer a:hover{color:#fff}
   .bar .logo{margin:0 auto}            /* logo centré sur téléphone */
   .burger{position:absolute;right:18px}
   .story-inner,.contact-grid{grid-template-columns:1fr}
+  .hero-inner{grid-template-columns:1fr;gap:24px;padding:30px 0 44px;text-align:center}
+  .hero-text .sub{margin-left:auto;margin-right:auto}
+  .hero-text .hero-cta{justify-content:center}
+  .hero-visual{order:-1}
+  .hero-card{width:min(190px,60%);border-radius:26px}
+  .mascotte{width:104px}
   .foot-grid{grid-template-columns:1fr;gap:22px}
   .arrow{display:none}                 /* mobile = glisser au doigt */
   .card{flex-basis:80%}
   .section{padding:48px 0}
   .modal-photo{height:240px}
   .qty-row{flex-wrap:wrap}.qty-row select{flex:1}
+  .wrap{padding:0 18px}
+  .shop-head{align-items:stretch}
+  .toolbar{width:100%}
+  .search{flex:1;min-width:0}
+  .filter-btn{white-space:nowrap}
+  .totop{right:16px;bottom:16px}
+  .cart-fab{right:16px;bottom:74px}
+  .hero-card{width:min(180px,55%)}
 }
 @media(min-width:861px){
   .mobile-badge{display:none}
