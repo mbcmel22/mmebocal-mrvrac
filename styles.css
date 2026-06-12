@@ -17,7 +17,7 @@
   --body:'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
 body{margin:0;font-family:var(--body);color:var(--ink);background:var(--cream);line-height:1.55}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -152,8 +152,10 @@ nav.links a:hover{border-color:var(--orange)}
    =========================================================== */
 .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:26px}
 .svc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px 22px}
+.svc-ic{width:56px;height:56px;border-radius:15px;background:var(--cream);display:flex;align-items:center;
+  justify-content:center;overflow:hidden;margin-bottom:14px}
+.svc-ic img{width:100%;height:100%;object-fit:contain;padding:9px}
 .svc h3{font-size:1.18rem;margin-bottom:8px}
-.svc h3::before{content:"";display:block;width:34px;height:3px;background:var(--orange);border-radius:3px;margin-bottom:12px}
 .svc p{color:var(--muted);margin:0;font-size:.95rem}
 
 /* ===========================================================
@@ -264,8 +266,9 @@ footer a:hover{color:#fff}
   .open-badge{display:none}            /* repositionné dans le menu mobile */
   nav.links.open{display:flex;position:absolute;top:66px;left:0;right:0;flex-direction:column;
     background:var(--cream);border-bottom:1px solid var(--line);padding:14px 22px;gap:6px}
-  .bar .logo{margin:0 auto}            /* logo centré sur téléphone */
+  .bar > a{margin:0 auto}              /* logo centré sur téléphone */
   .burger{position:absolute;right:18px}
+  nav.links.open{position:fixed}
   .story-inner,.contact-grid{grid-template-columns:1fr}
   .hero-inner{grid-template-columns:1fr;gap:24px;padding:30px 0 44px;text-align:center}
   .hero-text .sub{margin-left:auto;margin-right:auto}
