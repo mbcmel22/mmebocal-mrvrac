@@ -38,29 +38,42 @@ h1,h2,h3,.display{font-family:var(--display);color:var(--green);line-height:1.05
 .btn-orange:hover{background:var(--orange-d)}
 .btn-ghost{background:transparent;color:var(--green);border:2px solid var(--line)}
 .btn-ghost:hover{border-color:var(--green);}
+.btn-blue{background:#2f7fb8;color:#fff}
+.btn-blue:hover{background:#28688f}
+.btn-sm{padding:9px 16px;font-size:.9rem}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 
 /* ===========================================================
-   HEADER
+   HEADER (fixe en haut)
    =========================================================== */
-header{position:sticky;top:0;z-index:50;background:rgba(248,243,233,.92);
-  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+body{padding-top:78px}
+header{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--cream);
+  border-bottom:1px solid var(--line)}
 .bar{display:flex;align-items:center;gap:18px;height:78px}
+.logo-link{display:inline-flex;align-items:center}
 .logo{height:54px;width:auto}
 nav.links{display:flex;gap:22px;margin-left:auto}
 nav.links a{font-family:var(--display);font-weight:500;color:var(--green);padding:6px 2px;border-bottom:2px solid transparent}
 nav.links a:hover{border-color:var(--orange)}
 
-/* Bandeau d'ouverture dynamique (remplace le badge zéro-déchet) */
+/* Bouton panier (header, haut à droite) */
+.cart-btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#fff;border:none;
+  border-radius:999px;padding:9px 16px;font-family:var(--display);font-weight:600;cursor:pointer;font-size:.95rem}
+.cart-btn:hover{background:var(--orange-d)}
+.cart-btn .n{background:#fff;color:var(--orange-d);border-radius:999px;font-size:.78rem;padding:1px 8px;font-weight:700;min-width:22px;text-align:center}
+
+/* Badge d'ouverture (dans le hero, visible partout) */
 .open-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-weight:600;
-  font-size:.82rem;padding:7px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--green)}
+  font-size:.84rem;padding:7px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--green);margin-bottom:14px}
 .open-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
 .open-badge.is-open .dot{background:var(--ok);box-shadow:0 0 0 3px rgba(63,143,78,.18)}
 .open-badge.is-soon .dot{background:var(--warn)}
 .open-badge.is-closing .dot{background:var(--orange)}
+.open-badge.is-closed .dot{background:var(--out)}
 
 .burger{display:none;margin-left:auto;background:none;border:none;cursor:pointer;padding:8px}
 .burger span{display:block;width:24px;height:2.5px;background:var(--green);margin:5px 0;border-radius:2px}
+
 
 /* ===========================================================
    HERO
@@ -142,19 +155,17 @@ nav.links a:hover{border-color:var(--orange)}
    =========================================================== */
 .soldout{background:#eef1e8}
 .soldout-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:22px}
-.so-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:16px;display:flex;
-  flex-direction:column;gap:10px}
-.so-card .so-name{font-family:var(--display);font-weight:600;color:var(--green)}
-.so-card .so-tag{font-size:.78rem;color:var(--out);font-weight:600;font-family:var(--display)}
+.soldout-card .body{display:flex;flex-direction:column;gap:4px}
+.so-btn{margin-top:12px;width:100%;justify-content:center}
 
 /* ===========================================================
    SERVICES (sans pictogrammes)
    =========================================================== */
 .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:26px}
 .svc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px 22px}
-.svc-ic{width:56px;height:56px;border-radius:15px;background:var(--cream);display:flex;align-items:center;
-  justify-content:center;overflow:hidden;margin-bottom:14px}
-.svc-ic img{width:100%;height:100%;object-fit:contain;padding:9px}
+.svc-ic{width:44px;height:44px;border-radius:12px;background:var(--cream);display:flex;align-items:center;
+  justify-content:center;overflow:hidden;margin-bottom:12px}
+.svc-ic img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;padding:8px}
 .svc h3{font-size:1.18rem;margin-bottom:8px}
 .svc p{color:var(--muted);margin:0;font-size:.95rem}
 
@@ -177,6 +188,7 @@ nav.links a:hover{border-color:var(--orange)}
    =========================================================== */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:26px}
 .info-row{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.info-row a{color:var(--green);font-weight:500;text-decoration:underline;text-underline-offset:3px}
 .info-row b{font-family:var(--display);color:var(--green);min-width:96px}
 .map{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);min-height:280px}
 .map iframe{width:100%;height:100%;min-height:280px;border:0}
@@ -228,9 +240,9 @@ footer a:hover{color:#fff}
 .lightbox img{max-width:100%;max-height:100%;border-radius:12px}
 
 /* Panier de réservation (drawer) */
-.cart-fab{position:fixed;right:20px;bottom:84px;z-index:80;display:none}
-.cart-fab.show{display:inline-flex}
-.cart-fab .n{background:#fff;color:var(--green);border-radius:999px;font-size:.78rem;padding:1px 8px;font-family:var(--display);font-weight:700}
+/* Case de consentement (plus grande) */
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:.92rem;color:var(--muted);cursor:pointer;margin-top:6px}
+.consent input{width:22px;height:22px;margin-top:1px;flex:none;cursor:pointer;accent-color:var(--green)}
 .cart-list{list-style:none;padding:0;margin:0 0 4px}
 .cart-list li{display:flex;justify-content:space-between;align-items:center;gap:10px;
   background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px}
@@ -259,27 +271,29 @@ footer a:hover{color:#fff}
    RESPONSIVE
    =========================================================== */
 @media(max-width:860px){
+  body{padding-top:66px}
   .bar{height:66px;gap:10px}
-  .logo{height:44px}
+  .logo{height:42px}
   nav.links{display:none}
-  .burger{display:block}
-  .open-badge{display:none}            /* repositionné dans le menu mobile */
-  nav.links.open{display:flex;position:absolute;top:66px;left:0;right:0;flex-direction:column;
-    background:var(--cream);border-bottom:1px solid var(--line);padding:14px 22px;gap:6px}
-  .bar > a{margin:0 auto}              /* logo centré sur téléphone */
-  .burger{position:absolute;right:18px}
-  nav.links.open{position:fixed}
+  .burger{display:block;position:static;margin-left:0}
+  nav.links.open{display:flex;position:fixed;top:66px;left:0;right:0;flex-direction:column;
+    background:var(--cream);border-bottom:1px solid var(--line);padding:14px 22px;gap:6px;z-index:55}
+  .logo-link{margin-right:auto}        /* logo à gauche, contrôles à droite */
+  .cart-btn{padding:8px 11px}
+  .cart-btn .cart-label{display:none}  /* mobile : icône + compteur seulement */
+  .open-badge{margin:0 auto 14px}      /* badge centré dans le hero mobile */
   .story-inner,.contact-grid{grid-template-columns:1fr}
-  .hero-inner{grid-template-columns:1fr;gap:24px;padding:30px 0 44px;text-align:center}
+  .hero-inner{grid-template-columns:1fr;gap:22px;padding:26px 0 40px;text-align:center}
   .hero-text .sub{margin-left:auto;margin-right:auto}
   .hero-text .hero-cta{justify-content:center}
   .hero-visual{order:-1}
-  .hero-card{width:min(190px,60%);border-radius:26px}
-  .mascotte{width:104px}
+  .hero-card{width:min(170px,52%);border-radius:24px}
+  .mascotte{width:96px}
   .foot-grid{grid-template-columns:1fr;gap:22px}
   .arrow{display:none}                 /* mobile = glisser au doigt */
-  .card{flex-basis:80%}
-  .section{padding:48px 0}
+  .card{flex-basis:82%}
+  .card .ph{height:170px}
+  .section{padding:46px 0}
   .modal-photo{height:240px}
   .qty-row{flex-wrap:wrap}.qty-row select{flex:1}
   .wrap{padding:0 18px}
@@ -288,11 +302,6 @@ footer a:hover{color:#fff}
   .search{flex:1;min-width:0}
   .filter-btn{white-space:nowrap}
   .totop{right:16px;bottom:16px}
-  .cart-fab{right:16px;bottom:74px}
-  .hero-card{width:min(180px,55%)}
-}
-@media(min-width:861px){
-  .mobile-badge{display:none}
 }
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important}
