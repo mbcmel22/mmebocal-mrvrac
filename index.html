@@ -18,15 +18,17 @@
 <!-- ================= HEADER ================= -->
 <header>
   <div class="wrap bar">
-    <a href="#top"><img src="logo.png" alt="Mme Bocal & Mr Vrac" class="logo"></a>
+    <a href="#top" class="logo-link"><img src="logo.png" alt="Mme Bocal & Mr Vrac" class="logo"></a>
     <nav class="links" id="nav">
       <a href="#shop">Nos produits</a>
       <a href="#services">Nos services</a>
       <a href="#story">L'épicerie</a>
       <a href="#contact">Contact</a>
-      <span class="open-badge mobile-badge" id="openBadgeMobile"><span class="dot"></span><span class="lbl">Horaires</span></span>
     </nav>
-    <span class="open-badge" id="openBadge"><span class="dot"></span><span class="lbl">Horaires</span></span>
+    <button class="cart-btn" id="cartBtn" aria-label="Mon panier">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.2a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.8L21 7H6"/></svg>
+      <span class="cart-label">Mon panier</span><span class="n" id="cartN">0</span>
+    </button>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -37,13 +39,14 @@
 <section class="hero">
  <div class="wrap hero-inner">
   <div class="hero-text">
+    <span class="open-badge" id="openBadge"><span class="dot"></span><span class="lbl">Horaires</span></span>
     <p class="eyebrow">Épicerie vrac & bio · Cholet</p>
     <h1>Le bio local,<br>en vrac et en bocal.</h1>
     <p class="tag">Mangez juste. Jetez moins.</p>
     <p class="sub">Du riz aux épices, du café aux fruits secs, du miel de Cholet aux produits d'hygiène à recharger : composez vos courses au poids, sans emballage inutile.</p>
     <div class="hero-cta">
       <a href="#shop" class="btn btn-primary">Découvrir nos produits</a>
-      <a href="#contact" class="btn btn-ghost">Nous écrire</a>
+      <a href="#contact" class="btn btn-blue">Contact</a>
     </div>
   </div>
   <div class="hero-visual">
@@ -183,18 +186,24 @@
       <h3 id="prodName"></h3>
       <p class="price" id="prodPrice"></p>
       <p class="desc" id="prodDesc"></p>
-      <div class="field">
-        <label>Quantité souhaitée</label>
-        <div class="qty-row">
-          <input id="prodQty" type="number" min="1" step="1" placeholder="Ex : 500">
-          <select id="prodUnit">
-            <option value="g">grammes</option>
-            <option value="kg">kg</option>
-            <option value="unité">à l'unité</option>
-          </select>
+      <div id="prodReserve">
+        <div class="field">
+          <label>Quantité souhaitée</label>
+          <div class="qty-row">
+            <input id="prodQty" type="number" min="1" step="1" placeholder="Ex : 500">
+            <select id="prodUnit">
+              <option value="g">grammes</option>
+              <option value="kg">kg</option>
+              <option value="unité">à l'unité</option>
+            </select>
+          </div>
         </div>
+        <button class="btn btn-orange" id="prodAdd" style="width:100%;justify-content:center">Ajouter à mon panier</button>
       </div>
-      <button class="btn btn-orange" id="prodAdd" style="width:100%;justify-content:center">Ajouter à ma réservation</button>
+      <div id="prodOutBox" style="display:none">
+        <div class="notice">Ce produit est momentanément épuisé. Laissez-nous vos coordonnées, on vous prévient dès son retour.</div>
+        <button class="btn btn-orange" id="prodAlert" style="width:100%;justify-content:center">Prévenez-moi quand c'est disponible</button>
+      </div>
     </div>
   </div>
 </div>
@@ -205,7 +214,7 @@
     <button class="x" id="cartClose" aria-label="Fermer">✕</button>
     <div class="modal-body">
       <p class="eyebrow">Click & collect</p>
-      <h3>Ma réservation</h3>
+      <h3>Mon panier</h3>
       <p class="desc">Vos produits sont mis de côté <b>1 heure</b> en magasin. Ajoutez autant de produits que vous voulez avant d'envoyer.</p>
       <ul class="cart-list" id="cartList"></ul>
       <div class="field"><label>Votre nom</label><input id="cName" placeholder="Ex : Bryan Mendy"></div>
@@ -240,11 +249,11 @@
       <p class="desc">Laissez vos coordonnées : nous vous envoyons un message dès que le produit revient.</p>
       <div class="field"><label>Votre nom</label><input id="aName" placeholder="Ex : Bryan Mendy"></div>
       <div class="field"><label>Votre numéro de téléphone</label><input id="aPhone" type="tel" placeholder="06 12 34 56 78"></div>
-      <label style="display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--muted);cursor:pointer">
-        <input type="checkbox" id="aConsent" style="width:auto;margin-top:3px">
+      <label class="consent">
+        <input type="checkbox" id="aConsent">
         <span>J'accepte d'être recontacté(e) par message dès que ce produit est de nouveau disponible.</span>
       </label>
-      <button class="btn btn-orange" id="aSend" style="width:100%;justify-content:center;margin-top:16px">Me prévenir</button>
+      <button class="btn btn-orange btn-sm" id="aSend" style="margin-top:16px">Me prévenir</button>
     </div>
   </div>
 </div>
@@ -252,8 +261,7 @@
 <!-- ============ ZOOM PHOTO ============ -->
 <div class="lightbox" id="lightbox"><img id="lightboxImg" alt=""></div>
 
-<!-- ============ PANIER FLOTTANT + RETOUR HAUT + TOAST ============ -->
-<button class="btn btn-orange cart-fab" id="cartFab">Ma réservation <span class="n" id="cartFabN">0</span></button>
+<!-- ============ RETOUR HAUT + TOAST ============ -->
 <button class="totop" id="totop" aria-label="Revenir en haut">↑</button>
 <div class="toast" id="toast"></div>
 
@@ -297,21 +305,39 @@ async function loadProducts(){
 }
 
 /* ---------- bandeau ouverture ---------- */
+const JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
 function toMin(s){ const [h,m]=s.split(':').map(Number); return h*60+m; }
 function fmtLeft(m){ const h=Math.floor(m/60), mm=m%60; return h>0?(mm>0?`${h} h ${mm}`:`${h} h`):`${mm} min`; }
+function fmtH(s){ return s.replace(':','h').replace(/h00$/,'h'); }
+function nextOpening(hours, now){
+  const nm=now.getHours()*60+now.getMinutes();
+  for(let off=0; off<8; off++){
+    const day=(now.getDay()+off)%7; const todays=hours[day]||[];
+    for(const [a] of todays){
+      if(off===0 && toMin(a)<=nm) continue;
+      if(off===0) return 'ouvre à '+fmtH(a);
+      if(off===1) return 'ouvre demain à '+fmtH(a);
+      return 'ouvre '+JOURS[day]+' à '+fmtH(a);
+    }
+  }
+  return '';
+}
 function refreshOpenBadge(){
   let hours={}; try{ hours=JSON.parse(SETTINGS.hours||'{}'); }catch(e){}
   const now=new Date(), day=now.getDay(), nm=now.getHours()*60+now.getMinutes();
   const slots=(hours[day]||[]).map(([a,b])=>[toMin(a),toMin(b)]);
-  let state='closed', label='Fermé aujourd\'hui';
+  let state='closed', label='Fermé';
   for(const [a,b] of slots){ if(nm>=a && nm<b){ const left=b-nm;
     if(left<=60){ state='closing'; label='Ferme dans '+fmtLeft(left); } else { state='open'; label='Ouvert actuellement'; } } }
-  if(state==='closed'){ let best=null;
+  if(state==='closed'){
+    let best=null;
     for(const [a] of slots){ if(a>nm){ const d=a-nm; if(d<=120 && (best===null||d<best)) best=d; } }
-    if(best!==null){ state='soon'; label='Ouvre dans '+fmtLeft(best); } }
-  ['openBadge','openBadgeMobile'].forEach(id=>{ const el=$(id); if(!el) return;
-    el.className='open-badge'+(id==='openBadgeMobile'?' mobile-badge':'')+(state==='open'?' is-open':state==='closing'?' is-closing':state==='soon'?' is-soon':'');
-    el.querySelector('.lbl').textContent=label; });
+    if(best!==null){ state='soon'; label='Ouvre dans '+fmtLeft(best); }
+    else { const nx=nextOpening(hours,now); label = nx ? 'Fermé · '+nx : 'Fermé'; }
+  }
+  const el=$('openBadge'); if(!el) return;
+  el.className='open-badge'+(state==='open'?' is-open':state==='closing'?' is-closing':state==='soon'?' is-soon':' is-closed');
+  el.querySelector('.lbl').textContent=label;
 }
 
 /* ---------- filtre ---------- */
@@ -346,10 +372,13 @@ function render(){
   const out = PRODUCTS.filter(p=>p.qty===0);
   const sec=$('soldout'), grid=$('soldoutGrid');
   if(out.length){ sec.style.display=''; grid.innerHTML='';
-    out.forEach(p=>{ const d=document.createElement('div'); d.className='so-card';
-      d.innerHTML=`<div class="so-name">${p.name}</div><div class="so-tag">Épuisé</div>
-        <button class="btn btn-orange" style="justify-content:center">Prévenez-moi</button>`;
-      d.querySelector('button').onclick=()=>openAlert(p); grid.appendChild(d); });
+    out.forEach(p=>{ const c=document.createElement('div'); c.className='card soldout-card'; c.onclick=()=>openProduct(p);
+      c.innerHTML=`<div class="ph">${photoHTML((p.image_url||p.photo_url))}
+          <span class="badge out">Épuisé</span>${p.local?'<span class="badge local">Local</span>':''}</div>
+        <div class="body"><div class="cat">${p.category}</div><div class="name">${p.name}</div>
+          <button class="btn btn-orange btn-sm so-btn">Prévenez-moi</button></div>`;
+      c.querySelector('.so-btn').onclick=(e)=>{ e.stopPropagation(); openAlert(p); };
+      grid.appendChild(c); });
   } else sec.style.display='none';
 }
 function updateArrows(){
@@ -376,8 +405,12 @@ function openProduct(p){
   $('prodQty').value='';
   // unité par défaut selon le produit
   const u=$('prodUnit'); u.value = p.unit==='unité' ? 'unité' : (p.unit==='kg'?'g':'unité'); if(p.unit==='100g') u.value='g';
+  const isOut=(p.qty||0)===0;
+  $('prodReserve').style.display=isOut?'none':'block';
+  $('prodOutBox').style.display=isOut?'block':'none';
   $('prodOverlay').classList.add('open');
 }
+$('prodAlert').onclick=()=>{ $('prodOverlay').classList.remove('open'); openAlert(activeProduct); };
 $('prodClose').onclick=()=>$('prodOverlay').classList.remove('open');
 $('lightbox').onclick=()=>$('lightbox').classList.remove('open');
 $('prodAdd').onclick=()=>{
@@ -385,20 +418,19 @@ $('prodAdd').onclick=()=>{
   if(!qty||qty<=0){ toast('Indiquez une quantité.'); return; }
   CART.push({name:activeProduct.name, qty, unit:$('prodUnit').value});
   $('prodOverlay').classList.remove('open');
-  refreshCart(); toast('Ajouté à votre réservation.');
+  refreshCart(); toast('Ajouté à mon panier.');
 };
 
 /* ---------- panier ---------- */
 function refreshCart(){
-  $('cartFabN').textContent=CART.length;
-  $('cartFab').classList.toggle('show',CART.length>0);
+  $('cartN').textContent=CART.length;
   const list=$('cartList'); list.innerHTML='';
   CART.forEach((it,i)=>{ const li=document.createElement('li');
     li.innerHTML=`<span><span class="ci-name">${it.name}</span><br><span class="ci-qty">${it.qty} ${it.unit}</span></span>
       <button class="ci-del" aria-label="Retirer">✕</button>`;
     li.querySelector('.ci-del').onclick=()=>{ CART.splice(i,1); refreshCart(); }; list.appendChild(li); });
 }
-$('cartFab').onclick=()=>{ if(!CART.length){ toast('Votre réservation est vide.'); return; } $('cartOverlay').classList.add('open'); };
+$('cartBtn').onclick=()=>{ if(!CART.length){ toast('Votre panier est vide.'); return; } $('cartOverlay').classList.add('open'); };
 $('cartClose').onclick=$('cartContinue').onclick=()=>$('cartOverlay').classList.remove('open');
 
 $('cartSend').onclick=async()=>{
