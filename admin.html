@@ -61,7 +61,14 @@
   .card-set .field{margin-bottom:12px}
   .mascotte-prev{width:120px;height:140px;object-fit:contain;background:var(--cream);border-radius:12px;padding:8px}
   .hint{color:var(--muted);font-size:.85rem}
-  @media(max-width:740px){.stats{grid-template-columns:repeat(2,1fr)}.prow{grid-template-columns:1fr}.pactions{flex-direction:row}}
+  @media(max-width:740px){.stats{grid-template-columns:repeat(2,1fr)}.prow{grid-template-columns:1fr}.pactions{flex-direction:row}
+    #svcImages{grid-template-columns:1fr!important}
+    .card-set{max-width:100%}
+    #hoursRows>div{display:flex!important;flex-wrap:wrap;align-items:center;gap:6px!important}
+    #hoursRows>div b{flex:0 0 100%}
+    #hoursRows>div input{flex:1 1 calc(50% - 4px);min-width:0}
+    .toolbar-admin{flex-direction:column;align-items:stretch}
+    .toolbar-admin select,.toolbar-admin input{width:100%}}
 </style>
 </head>
 <body>
@@ -110,8 +117,10 @@
     <div class="panel active" id="panel-products">
       <div class="toolbar-admin">
         <input id="psearch" placeholder="Rechercher…" style="padding:9px 14px;border:1px solid var(--line);border-radius:999px">
+        <select id="pcat" style="padding:9px 14px;border:1px solid var(--line);border-radius:999px;font-family:var(--body);background:#fff"></select>
         <button class="btn btn-orange" id="addProduct">+ Nouveau produit</button>
       </div>
+      <datalist id="catlist"></datalist>
       <div id="productList"></div>
     </div>
 
@@ -239,10 +248,20 @@ function stats(){
 }
 
 /* ---------- PRODUITS (CRUD) ---------- */
+function categories(){ return [...new Set(PRODUCTS.map(p=>p.category).filter(Boolean))].sort(); }
+function buildCatControls(){
+  const cats=categories();
+  $('catlist').innerHTML=cats.map(c=>`<option value="${c.replace(/"/g,'&quot;')}">`).join('');
+  const sel=$('pcat'); const cur=sel.value;
+  sel.innerHTML='<option value="">Tous les rayons</option>'+cats.map(c=>`<option ${c===cur?'selected':''}>${c}</option>`).join('');
+}
 function renderProducts(){
-  const q=($('psearch').value||'').toLowerCase();
+  buildCatControls();
+  const q=($('psearch').value||'').toLowerCase(); const cat=$('pcat').value;
   const list=$('productList'); list.innerHTML='';
-  PRODUCTS.filter(p=>p.name.toLowerCase().includes(q)).forEach(p=>list.appendChild(productRow(p)));
+  PRODUCTS.filter(p=>p.name.toLowerCase().includes(q))
+    .filter(p=>!cat||p.category===cat)
+    .forEach(p=>list.appendChild(productRow(p)));
 }
 function productRow(p){
   const row=document.createElement('div'); row.className='prow';
@@ -253,7 +272,7 @@ function productRow(p){
       <div class="fg fg-name"><label>Nom du produit</label>
         <input class="f-name" value="${(p.name||'').replace(/"/g,'&quot;')}" placeholder="Ex : Riz basmati bio"></div>
       <div class="frow">
-        <div class="fg"><label>Rayon</label><input class="f-cat" value="${(p.category||'').replace(/"/g,'&quot;')}" placeholder="Ex : Vrac salé"></div>
+        <div class="fg"><label>Rayon</label><input class="f-cat" list="catlist" value="${(p.category||'').replace(/"/g,'&quot;')}" placeholder="Choisir ou saisir"></div>
         <div class="fg fg-price"><label>Prix (€)</label><input class="f-price" type="number" step="0.01" value="${p.price||0}"></div>
         <div class="fg fg-unit"><label>Unité</label>
           <select class="f-unit">${(p.unit&&!['kg','100g','unité','L'].includes(p.unit)?[p.unit]:[]).concat(['kg','100g','unité','L']).map(u=>`<option ${p.unit===u?'selected':''}>${u}</option>`).join('')}</select></div>
@@ -296,10 +315,11 @@ async function uploadPhoto(file){
   return db.storage.from('product-photos').getPublicUrl(path).data.publicUrl;
 }
 $('psearch').oninput=renderProducts;
+$('pcat').onchange=renderProducts;
 $('addProduct').onclick=async()=>{
   const max=Math.max(0,...PRODUCTS.map(p=>p.sort_order||0));
   await db.from('products').insert({name:'Nouveau produit',category:'Épicerie',price:0,unit:'kg',qty:0,sort_order:max+1});
-  toast('Produit créé — complétez ses infos.'); loadProducts();
+  toast('Produit créé, complétez ses infos.'); loadProducts();
 };
 
 /* ---------- RÉASSORT (épuisés + liste téléchargeable) ---------- */
@@ -315,7 +335,7 @@ function renderSoldout(){
 $('dlList').onclick=()=>{
   const out=PRODUCTS.filter(p=>p.qty===0);
   if(!out.length){ toast('Aucun produit épuisé.'); return; }
-  const txt='Liste de réassort — Mme Bocal & Mr Vrac\n'+new Date().toLocaleDateString('fr-FR')+'\n\n'+
+  const txt='Liste de réassort · Mme Bocal & Mr Vrac\n'+new Date().toLocaleDateString('fr-FR')+'\n\n'+
     out.map(p=>`[ ] ${p.name}  (${p.category})`).join('\n');
   const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));
   a.download='liste-reassort.txt'; a.click();
@@ -328,7 +348,7 @@ async function loadAlerts(){
   el.innerHTML = rows.length ? '' : '<p class="hint">Aucune demande en attente.</p>';
   rows.forEach(a=>{ const d=document.createElement('div'); d.className='alert-row';
     d.innerHTML=`<span class="who">${a.client_name}</span>
-      <span>📦 ${a.product_name||'—'}</span>
+      <span>📦 ${a.product_name||'-'}</span>
       <a href="tel:${a.client_phone}">${a.client_phone}</a>
       <span class="hint">${new Date(a.created_at).toLocaleDateString('fr-FR')}</span>
       <span class="sp"></span>
