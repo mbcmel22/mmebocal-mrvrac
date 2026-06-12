@@ -160,7 +160,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script>
-const db = supabase.createClient(window.SUPA.url, window.SUPA.key);
+const _SBURL = window.SUPABASE_URL || (window.SUPA && window.SUPA.url) || "";
+const _SBKEY = window.SUPABASE_ANON || window.SUPABASE_ANON_KEY || (window.SUPA && window.SUPA.key) || "";
+const db = supabase.createClient(_SBURL, _SBKEY);
 const $ = id => document.getElementById(id);
 let PRODUCTS=[], SETTINGS={};
 const DAYS=[['1','Lundi'],['2','Mardi'],['3','Mercredi'],['4','Jeudi'],['5','Vendredi'],['6','Samedi'],['0','Dimanche']];
