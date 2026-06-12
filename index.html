@@ -99,10 +99,18 @@
   <h2>Nos services</h2>
   <p class="lead">Un accompagnement vers une consommation plus simple et plus responsable.</p>
   <div class="services-grid">
-    <div class="svc"><h3>Vrac & au poids</h3><p>Servez-vous la juste quantité, sans emballage inutile. Apportez vos contenants, on s'occupe du reste.</p></div>
-    <div class="svc"><h3>Consigne</h3><p>Bocaux et bouteilles consignés : vous ramenez, on réutilise. Le verre a une seconde vie.</p></div>
-    <div class="svc"><h3>Paniers bio</h3><p>Des paniers de produits bio et locaux, à composer selon la saison et vos envies.</p></div>
-    <div class="svc"><h3>Producteurs locaux</h3><p>Nous privilégions les circuits courts et soutenons les producteurs de la région.</p></div>
+    <div class="svc">
+      <div class="svc-ic"><img data-svc="svc_img_0" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2335582B' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18'/%3E%3Cpath d='M6 7h12'/%3E%3Cpath d='M6 7l-3 6a3 3 0 0 0 6 0z'/%3E%3Cpath d='M18 7l-3 6a3 3 0 0 0 6 0z'/%3E%3Cpath d='M8 21h8'/%3E%3C/svg%3E"></div>
+      <h3>Vrac & au poids</h3><p>Servez-vous la juste quantité, sans emballage inutile. Apportez vos contenants, on s'occupe du reste.</p></div>
+    <div class="svc">
+      <div class="svc-ic"><img data-svc="svc_img_1" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2335582B' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='7' y='8' width='10' height='13' rx='2'/%3E%3Cpath d='M8 8V5h8v3'/%3E%3Cpath d='M9 14h6'/%3E%3C/svg%3E"></div>
+      <h3>Consigne</h3><p>Bocaux et bouteilles consignés : vous ramenez, on réutilise. Le verre a une seconde vie.</p></div>
+    <div class="svc">
+      <div class="svc-ic"><img data-svc="svc_img_2" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2335582B' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9h18l-1.5 10a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2z'/%3E%3Cpath d='M8 9l2-5M16 9l-2-5'/%3E%3Cpath d='M9 13v4M15 13v4M12 13v4'/%3E%3C/svg%3E"></div>
+      <h3>Paniers bio</h3><p>Des paniers de produits bio et locaux, à composer selon la saison et vos envies.</p></div>
+    <div class="svc">
+      <div class="svc-ic"><img data-svc="svc_img_3" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2335582B' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z'/%3E%3Ccircle cx='12' cy='10' r='2.5'/%3E%3C/svg%3E"></div>
+      <h3>Producteurs locaux</h3><p>Nous privilégions les circuits courts et soutenons les producteurs de la région.</p></div>
   </div>
 </section>
 
@@ -278,6 +286,7 @@ async function loadSettings(){
     $('fPhone').textContent=SETTINGS.phone; $('fPhone').href='tel:'+SETTINGS.phone.replace(/\s/g,''); $('okPhone').textContent=SETTINGS.phone; }
   if(SETTINGS.email){ $('cMail').textContent=SETTINGS.email; $('cMail').href='mailto:'+SETTINGS.email; }
   if(SETTINGS.address){ $('cAddr').textContent=SETTINGS.address; $('fAddr').textContent=SETTINGS.address; }
+  document.querySelectorAll('.svc-ic img[data-svc]').forEach(img=>{ const v=SETTINGS[img.dataset.svc]; if(v) img.src=v; });
   refreshOpenBadge();
 }
 async function loadProducts(){
@@ -307,7 +316,7 @@ function refreshOpenBadge(){
 
 /* ---------- filtre ---------- */
 function buildFilter(){
-  const cats=['Tous',...new Set(PRODUCTS.filter(p=>p.quantity>0).map(p=>p.category))];
+  const cats=['Tous',...new Set(PRODUCTS.filter(p=>p.qty>0).map(p=>p.category))];
   const menu=$('filterMenu'); menu.innerHTML='';
   cats.forEach(c=>{ const b=document.createElement('button'); b.textContent=c; if(c===activeCat) b.className='active';
     b.onclick=()=>{ activeCat=c; $('filterMenu').classList.remove('open'); buildFilter(); render(); }; menu.appendChild(b); });
@@ -316,16 +325,16 @@ function buildFilter(){
 /* ---------- rendu carrousel + épuisés ---------- */
 function render(){
   const q=($('search').value||'').toLowerCase().trim();
-  const inStock = PRODUCTS.filter(p=>p.quantity>0)
+  const inStock = PRODUCTS.filter(p=>p.qty>0)
     .filter(p=>activeCat==='Tous'||p.category===activeCat)
     .filter(p=>!q || p.name.toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q));
   const track=$('track'); track.innerHTML='';
   if(!inStock.length){ track.innerHTML='<div class="empty">Aucun produit ne correspond à votre recherche.</div>'; }
   inStock.forEach(p=>{
     const c=document.createElement('div'); c.className='card'; c.onclick=()=>openProduct(p);
-    c.innerHTML=`<div class="ph">${photoHTML(p.photo_url)}
-        <span class="badge ${stockClass(p.quantity)}">${stockLabel(p.quantity)}</span>
-        ${p.is_local?'<span class="badge local">Local</span>':''}</div>
+    c.innerHTML=`<div class="ph">${photoHTML((p.image_url||p.photo_url))}
+        <span class="badge ${stockClass(p.qty)}">${stockLabel(p.qty)}</span>
+        ${p.local?'<span class="badge local">Local</span>':''}</div>
       <div class="body"><div class="cat">${p.category}</div><div class="name">${p.name}</div>
         <div class="price">${euro(p.price)} € <small>/ ${unitTxt(p.unit)}</small></div></div>`;
     track.appendChild(c);
@@ -334,7 +343,7 @@ function render(){
   updateArrows();
 
   // épuisés
-  const out = PRODUCTS.filter(p=>p.quantity===0);
+  const out = PRODUCTS.filter(p=>p.qty===0);
   const sec=$('soldout'), grid=$('soldoutGrid');
   if(out.length){ sec.style.display=''; grid.innerHTML='';
     out.forEach(p=>{ const d=document.createElement('div'); d.className='so-card';
@@ -358,8 +367,8 @@ document.addEventListener('click',()=>$('filterMenu').classList.remove('open'));
 /* ---------- modale produit ---------- */
 function openProduct(p){
   activeProduct=p;
-  $('prodPhoto').innerHTML=photoHTML(p.photo_url,true);
-  $('prodPhoto').onclick=()=>{ if(p.photo_url){ $('lightboxImg').src=p.photo_url; $('lightbox').classList.add('open'); } };
+  $('prodPhoto').innerHTML=photoHTML((p.image_url||p.photo_url),true);
+  $('prodPhoto').onclick=()=>{ if((p.image_url||p.photo_url)){ $('lightboxImg').src=(p.image_url||p.photo_url); $('lightbox').classList.add('open'); } };
   $('prodCat').textContent=p.category;
   $('prodName').textContent=p.name;
   $('prodPrice').textContent=`${euro(p.price)} € / ${unitTxt(p.unit)}`;
