@@ -10,12 +10,13 @@
   body{background:var(--cream-d)}
   .admin-bar{background:var(--green);color:#fff;padding:14px 0}
   .admin-bar .wrap{display:flex;align-items:center;gap:14px}
-  .admin-bar img{height:36px}
+  .admin-bar img{height:30px;background:#fff;padding:5px 9px;border-radius:9px}
   .admin-bar .sp{margin-left:auto}
   .admin-bar button{background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:999px;padding:8px 16px;font-family:var(--display);cursor:pointer}
   .login{max-width:380px;margin:8vh auto;background:#fff;border-radius:var(--r);padding:34px;box-shadow:var(--shadow)}
   .login img{height:64px;margin:0 auto 18px}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 18px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px;position:sticky;top:0;z-index:20;
+    background:var(--cream-d);padding:14px 0}
   .tab{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 18px;font-family:var(--display);
     font-weight:500;color:var(--green);cursor:pointer}
   .tab.active{background:var(--green);color:#fff}
@@ -25,21 +26,30 @@
   .stat .l{color:var(--muted);font-size:.85rem}
   .panel{display:none}.panel.active{display:block}
   .prow{background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:16px;margin-bottom:12px;
-    display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center}
-  .prow .thumb{width:90px;height:90px;border-radius:10px;background:var(--cream);display:flex;align-items:center;
+    display:grid;grid-template-columns:96px 1fr 150px;gap:16px;align-items:start}
+  .prow .thumb{width:96px;height:96px;border-radius:12px;background:var(--cream);display:flex;align-items:center;
     justify-content:center;overflow:hidden;position:relative;cursor:pointer}
   .prow .thumb img{width:100%;height:100%;object-fit:cover}
   .prow .thumb .cam{position:absolute;bottom:4px;right:4px;background:var(--green);color:#fff;border-radius:50%;
     width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:.8rem}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .grid2 .full{grid-column:1/3}
-  .prow input,.prow select{padding:8px 10px;border:1px solid var(--line);border-radius:9px;font-family:var(--body);width:100%}
-  .prow label.inline{display:flex;gap:6px;align-items:center;font-size:.85rem;color:var(--muted)}
+  .pfields{display:flex;flex-direction:column;gap:12px}
+  .frow{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+  .frow-bottom{align-items:center}
+  .fg{display:flex;flex-direction:column;gap:5px}
+  .fg label{font-family:var(--display);font-weight:500;color:var(--muted);font-size:.74rem;text-transform:uppercase;letter-spacing:.03em}
+  .fg-name{flex:1}.fg-name input{width:100%}
+  .fg input,.fg select{padding:9px 11px;border:1px solid var(--line);border-radius:9px;font-family:var(--body);font-size:.95rem}
+  .fg:not(.fg-name){flex:0 0 auto}
+  .fg .f-cat{width:170px}.fg-price input{width:90px}.fg-unit select{width:120px}
   .stockctrl{display:flex;align-items:center;gap:6px}
-  .stockctrl button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:1.1rem}
-  .stockctrl input{width:64px;text-align:center}
-  .pactions{display:flex;flex-direction:column;gap:8px;align-items:stretch;min-width:120px}
-  .pactions button{font-family:var(--display);border:none;border-radius:9px;padding:9px;cursor:pointer}
+  .stockctrl button{width:34px;height:38px;border-radius:9px;border:1px solid var(--line);background:var(--cream);cursor:pointer;font-size:1.2rem;color:var(--green)}
+  .stockctrl button:hover{background:var(--green);color:#fff}
+  .stockctrl input{width:70px;text-align:center;height:38px}
+  .localtoggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--display);
+    font-weight:500;color:var(--green);background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+  .localtoggle input{width:17px;height:17px;cursor:pointer}
+  .pactions{display:flex;flex-direction:column;gap:8px;align-items:stretch;min-width:140px}
+  .pactions button{font-family:var(--display);border:none;border-radius:9px;padding:10px;cursor:pointer}
   .save{background:var(--green);color:#fff}.del{background:#fbecea;color:var(--out)}.hide{background:var(--cream);color:var(--ink)}
   .alert-row,.resa-row{background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:10px;
     display:flex;gap:14px;align-items:center;flex-wrap:wrap}
@@ -138,6 +148,11 @@
         </div>
       </div>
       <div class="card-set">
+        <h3>Images des services</h3>
+        <p class="hint" style="margin-bottom:14px">Personnalisez l'icône ou la photo en haut de chaque service de la page d'accueil.</p>
+        <div id="svcImages" style="display:grid;grid-template-columns:1fr 1fr;gap:16px"></div>
+      </div>
+      <div class="card-set">
         <h3>Coordonnées</h3>
         <div class="field"><label>Numéro WhatsApp du gérant (réservations)</label><input id="setWhats" placeholder="33762147567"><p class="hint">Format international sans + ni espaces. Ex : 33762147567</p></div>
         <div class="field"><label>Téléphone affiché</label><input id="setPhone"></div>
@@ -193,6 +208,24 @@ async function loadSettings(){
   $('setWhats').value=SETTINGS.whatsapp||''; $('setPhone').value=SETTINGS.phone||'';
   $('setMail').value=SETTINGS.email||''; $('setAddr').value=SETTINGS.address||'';
   buildHoursEditor();
+  buildSvcImages();
+}
+const SVC_LABELS=['Vrac & au poids','Consigne','Paniers bio','Producteurs locaux'];
+function buildSvcImages(){
+  const box=$('svcImages'); if(!box) return; box.innerHTML='';
+  SVC_LABELS.forEach((label,i)=>{
+    const key='svc_img_'+i; const cur=SETTINGS[key]||'';
+    const cell=document.createElement('div');
+    cell.style.cssText='display:flex;gap:12px;align-items:center;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px';
+    cell.innerHTML=`<div style="width:52px;height:52px;border-radius:11px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden">
+        ${cur?`<img src="${cur}" style="width:100%;height:100%;object-fit:contain;padding:6px">`:'<span style="font-size:.62rem;color:var(--muted);text-align:center">icône<br>défaut</span>'}</div>
+      <div style="flex:1;min-width:0"><div style="font-family:var(--display);color:var(--green);font-weight:500;font-size:.9rem">${label}</div>
+        <input type="file" accept="image/*" capture="environment" style="font-size:.8rem;max-width:100%"></div>`;
+    cell.querySelector('input').onchange=async e=>{ const f=e.target.files[0]; if(!f) return; toast('Envoi…');
+      try{ const url=await uploadPhoto(f); await setVal(key,url); SETTINGS[key]=url; buildSvcImages(); toast('Image enregistrée.'); }
+      catch(err){ toast('Échec de l\'envoi.'); } };
+    box.appendChild(cell);
+  });
 }
 async function loadProducts(){
   const {data}=await db.from('products').select('*').order('sort_order'); PRODUCTS=data||[];
@@ -200,8 +233,8 @@ async function loadProducts(){
 }
 function stats(){
   $('sTotal').textContent=PRODUCTS.length;
-  $('sLow').textContent=PRODUCTS.filter(p=>p.quantity>0&&p.quantity<=5).length;
-  $('sOut').textContent=PRODUCTS.filter(p=>p.quantity===0).length;
+  $('sLow').textContent=PRODUCTS.filter(p=>p.qty>0&&p.qty<=5).length;
+  $('sOut').textContent=PRODUCTS.filter(p=>p.qty===0).length;
   $('sHidden').textContent=PRODUCTS.filter(p=>!p.visible).length;
 }
 
@@ -214,17 +247,22 @@ function renderProducts(){
 function productRow(p){
   const row=document.createElement('div'); row.className='prow';
   row.innerHTML=`
-    <div class="thumb">${p.photo_url?`<img src="${p.photo_url}">`:'<span style="font-size:.7rem;color:var(--muted);text-align:center;padding:4px">Ajouter<br>une photo</span>'}<span class="cam">📷</span>
+    <div class="thumb">${(p.image_url||p.photo_url)?`<img src="${(p.image_url||p.photo_url)}">`:'<span style="font-size:.7rem;color:var(--muted);text-align:center;padding:4px">Ajouter<br>une photo</span>'}<span class="cam">📷</span>
       <input type="file" accept="image/*" capture="environment" style="position:absolute;inset:0;opacity:0;cursor:pointer"></div>
-    <div class="grid2">
-      <input class="full f-name" value="${(p.name||'').replace(/"/g,'&quot;')}" placeholder="Nom du produit">
-      <input class="f-cat" value="${(p.category||'').replace(/"/g,'&quot;')}" placeholder="Rayon">
-      <input class="f-price" type="number" step="0.01" value="${p.price||0}" placeholder="Prix">
-      <select class="f-unit">
-        ${(p.unit&&!['kg','100g','unité','L'].includes(p.unit)?[p.unit]:[]).concat(['kg','100g','unité','L']).map(u=>`<option ${p.unit===u?'selected':''}>${u}</option>`).join('')}
-      </select>
-      <div class="stockctrl"><button class="minus">−</button><input class="f-qty" type="number" value="${p.quantity||0}"><button class="plus">+</button></div>
-      <label class="inline full"><input type="checkbox" class="f-local" ${p.is_local?'checked':''}> Produit local</label>
+    <div class="pfields">
+      <div class="fg fg-name"><label>Nom du produit</label>
+        <input class="f-name" value="${(p.name||'').replace(/"/g,'&quot;')}" placeholder="Ex : Riz basmati bio"></div>
+      <div class="frow">
+        <div class="fg"><label>Rayon</label><input class="f-cat" value="${(p.category||'').replace(/"/g,'&quot;')}" placeholder="Ex : Vrac salé"></div>
+        <div class="fg fg-price"><label>Prix (€)</label><input class="f-price" type="number" step="0.01" value="${p.price||0}"></div>
+        <div class="fg fg-unit"><label>Unité</label>
+          <select class="f-unit">${(p.unit&&!['kg','100g','unité','L'].includes(p.unit)?[p.unit]:[]).concat(['kg','100g','unité','L']).map(u=>`<option ${p.unit===u?'selected':''}>${u}</option>`).join('')}</select></div>
+      </div>
+      <div class="frow frow-bottom">
+        <div class="fg fg-stock"><label>Stock</label>
+          <div class="stockctrl"><button class="minus" type="button">−</button><input class="f-qty" type="number" value="${p.qty||0}"><button class="plus" type="button">+</button></div></div>
+        <label class="localtoggle"><input type="checkbox" class="f-local" ${p.local?'checked':''}><span>Produit local</span></label>
+      </div>
     </div>
     <div class="pactions">
       <button class="save">Enregistrer</button>
@@ -237,7 +275,7 @@ function productRow(p){
   row.querySelector('.save').onclick=async()=>{
     const upd={name:row.querySelector('.f-name').value.trim(),category:row.querySelector('.f-cat').value.trim(),
       price:parseFloat(row.querySelector('.f-price').value)||0,unit:row.querySelector('.f-unit').value,
-      quantity:parseInt(qtyEl.value)||0,is_local:row.querySelector('.f-local').checked};
+      qty:parseInt(qtyEl.value)||0,local:row.querySelector('.f-local').checked};
     const {error}=await db.from('products').update(upd).eq('id',p.id);
     if(error){toast('Erreur à l\'enregistrement.');return;} toast('Produit mis à jour.'); loadProducts();
   };
@@ -245,7 +283,7 @@ function productRow(p){
   row.querySelector('.del').onclick=async()=>{ if(!confirm('Supprimer ce produit ?'))return; await db.from('products').delete().eq('id',p.id); loadProducts(); };
   row.querySelector('input[type=file]').onchange=async e=>{ const f=e.target.files[0]; if(!f)return;
     toast('Envoi de la photo…');
-    try{ const url=await uploadPhoto(f); await db.from('products').update({photo_url:url}).eq('id',p.id); toast('Photo ajoutée.'); loadProducts(); }
+    try{ const url=await uploadPhoto(f); await db.from('products').update({image_url:url}).eq('id',p.id); toast('Photo ajoutée.'); loadProducts(); }
     catch(err){ toast('Échec de l\'envoi. Vérifiez le bucket « product-photos ».'); }
   };
   return row;
@@ -260,22 +298,22 @@ async function uploadPhoto(file){
 $('psearch').oninput=renderProducts;
 $('addProduct').onclick=async()=>{
   const max=Math.max(0,...PRODUCTS.map(p=>p.sort_order||0));
-  await db.from('products').insert({name:'Nouveau produit',category:'Épicerie',price:0,unit:'kg',quantity:0,sort_order:max+1});
+  await db.from('products').insert({name:'Nouveau produit',category:'Épicerie',price:0,unit:'kg',qty:0,sort_order:max+1});
   toast('Produit créé — complétez ses infos.'); loadProducts();
 };
 
 /* ---------- RÉASSORT (épuisés + liste téléchargeable) ---------- */
 function renderSoldout(){
-  const out=PRODUCTS.filter(p=>p.quantity===0); const el=$('soldoutList');
+  const out=PRODUCTS.filter(p=>p.qty===0); const el=$('soldoutList');
   el.innerHTML = out.length ? '' : '<p class="hint">Aucun produit épuisé pour le moment.</p>';
   out.forEach(p=>{ const d=document.createElement('div'); d.className='alert-row';
     d.innerHTML=`<span class="who">${p.name}</span><span class="hint">${p.category}</span>
       <span class="sp"></span><button class="btn btn-orange resto">Remettre en stock (6)</button>`;
-    d.querySelector('.resto').onclick=async()=>{ await db.from('products').update({quantity:6}).eq('id',p.id); loadProducts(); toast('Produit remis en stock.'); };
+    d.querySelector('.resto').onclick=async()=>{ await db.from('products').update({qty:6}).eq('id',p.id); loadProducts(); toast('Produit remis en stock.'); };
     el.appendChild(d); });
 }
 $('dlList').onclick=()=>{
-  const out=PRODUCTS.filter(p=>p.quantity===0);
+  const out=PRODUCTS.filter(p=>p.qty===0);
   if(!out.length){ toast('Aucun produit épuisé.'); return; }
   const txt='Liste de réassort — Mme Bocal & Mr Vrac\n'+new Date().toLocaleDateString('fr-FR')+'\n\n'+
     out.map(p=>`[ ] ${p.name}  (${p.category})`).join('\n');
